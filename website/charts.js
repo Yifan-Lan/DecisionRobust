@@ -10,26 +10,28 @@ window.DecisionCharts = (() => {
   const shortNames=['Text adversarial','Text injection','Image perturbation','Image overlay','Image instruction'];
   function tooltip(r,rank,suite){return `${r.model_name}\n${suite}\nASR ${percent(r.asr)} · rank ${rank}\n${r.successes} / ${r.denominator} clean-correct pairs\nClean accuracy ${percent(r.clean_accuracy_on_valid_pairs)}\nValid coverage ${r.valid_pairs} / ${r.candidates}${r.used_for_selection?'\n† Used in selecting this suite':''}`;}
   function mark(r,rank,suite,shape){const tip=tooltip(r,rank,suite);return `<g class="chart-mark" tabindex="0" role="img" aria-label="${e(tip)}" data-model="${e(r.model)}" data-config="${e(r.config)}" data-asr="${r.asr}" data-rank="${rank}" data-tip="${e(tip)}"><title>${e(tip)}</title>${shape}</g>`;}
-  function svg(body,height,title,desc){return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ${height}" role="img" aria-labelledby="plot-title plot-desc" style="font-family:system-ui,sans-serif;font-size:12px;fill:#35435d;background:white"><title id="plot-title">${e(title)}</title><desc id="plot-desc">${e(desc)}</desc>${body}</svg>`;}
+  function svg(body,height,title,desc,width=1000){return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="plot-title plot-desc" style="font-family:system-ui,sans-serif;font-size:12px;fill:#35435d;background:white;min-width:${width>1000?width:680}px"><title id="plot-title">${e(title)}</title><desc id="plot-desc">${e(desc)}</desc>${body}</svg>`;}
   function render({data,config,mode,measure,limit,complete,selected,search,onlySelected}){
     const configs=Object.keys(data.suites), pools=Object.fromEntries(configs.map(c=>[c,data.results[c].filter(r=>eligible(r,complete))]));
     const rankMaps=Object.fromEntries(configs.map(c=>[c,ranks(pools[c])]));
     const matches=r=>r.model_name.toLowerCase().includes(search.toLowerCase())&&(!selected.size? !onlySelected : selected.has(r.model));
     const anchor=pools[config].filter(matches).sort((a,b)=>a.asr-b.asr||a.model_name.localeCompare(b.model_name));
-    let body='',legend='',description='',title='',height=0, count=0;
+    let body='',legend='',description='',title='',height=0, count=0,plotWidth=1000;
     const titleName=data.suites[config][0];
     if(mode==='bars'){
       const rows=anchor.slice(0,limit==='all'?Infinity:Number(limit));count=rows.length;
       title=`${titleName} · ASR ranking`;
       description=`${rows.length} of ${anchor.length} eligible ${selected.size?'selected ':''}models shown, ordered by ASR. ${complete?'Full coverage required.':'Partial coverage included.'} Hover or focus a bar for accuracy, coverage, and denominator.`;
       if(rows.length){
-        height=rows.length*39+65;const left=290,width=575,top=34;
-        for(let v=0;v<=100;v+=20){const x=left+width*v/100;body+=`<path d="M${x} 23V${height-22}" stroke="#e6ebf3"/>`+text(x,15,`${v}%`,'text-anchor="middle" fill="#718099" font-size="10"');}
-        body+=text(8,15,'RANK / MODEL','fill="#718099" font-size="10" letter-spacing="1"');
-        rows.forEach((r,i)=>{const y=top+i*39,rank=rankMaps[config].get(r.model),partial=r.valid_pairs<r.candidates;
-          body+=text(8,y+15,String(rank).padStart(2,'0'),'fill="#7b88a1" font-size="11"');
-          body+=text(38,y+15,r.model_name,'font-size="12"');
-          body+=mark(r,rank,titleName,`<rect x="${left}" y="${y}" width="${width}" height="23" rx="2" fill="#f0f3fa"/><rect class="focus-ring" x="${left}" y="${y}" width="${Math.max(0,r.asr*width)}" height="23" rx="2" fill="${i===0?'#142b62':'#5676d6'}"${partial?' fill-opacity=".55"':''}/>${r.asr===0?`<path d="M${left} ${y}v23" stroke="#315cda" stroke-width="2"/>`:''}${text(left+width+14,y+16,`${percent(r.asr)}${r.used_for_selection?' †':''}${partial?' ○':''}`,'font-weight="600" fill="#203d87"')}`);
+        height=560;plotWidth=Math.max(1000,rows.length*85+200);
+        const left=165,right=plotWidth-40,top=44,bottom=320,step=(right-left)/rows.length,barWidth=Math.min(52,step*.65);
+        for(let v=0;v<=100;v+=20){const y=bottom-(bottom-top)*v/100;body+=`<path d="M${left} ${y}H${right}" stroke="#e6ebf3"/>`+text(left-16,y+4,`${v}%`,'text-anchor="end" fill="#718099" font-size="11"');}
+        body+=text(left,18,'ASR · LOWER IS BETTER','fill="#718099" font-size="10" letter-spacing="1"');
+        body+=text((left+right)/2,540,'MODEL / RANK','text-anchor="middle" fill="#718099" font-size="10" letter-spacing="1"');
+        rows.forEach((r,i)=>{const x=left+step*(i+.5),rank=rankMaps[config].get(r.model),partial=r.valid_pairs<r.candidates,barHeight=r.asr*(bottom-top),y=bottom-barHeight;
+          body+=text(x,342,`#${rank}`,'text-anchor="middle" fill="#7b88a1" font-size="10"');
+          body+=text(x+3,363,r.model_name,`font-size="11" text-anchor="end" transform="rotate(-45 ${x+3} 363)"`);
+          body+=mark(r,rank,titleName,`<rect x="${x-step/2}" y="${top}" width="${step}" height="${bottom-top}" fill="transparent"/><rect class="focus-ring" x="${x-barWidth/2}" y="${y}" width="${barWidth}" height="${barHeight}" rx="2" fill="${i===0?'#142b62':'#5676d6'}"${partial?' fill-opacity=".55"':''}/>${r.asr===0?`<path d="M${x-barWidth/2} ${bottom}h${barWidth}" stroke="#315cda" stroke-width="2"/>`:''}${text(x,y-10,`${percent(r.asr)}${r.used_for_selection?' †':''}${partial?' ○':''}`,'text-anchor="middle" font-size="11" font-weight="600" fill="#203d87"')}`);
         });
       }
     }else{
@@ -58,7 +60,7 @@ window.DecisionCharts = (() => {
     const empty='No eligible results match these filters. Change the dataset, model selection, or coverage filter.';
     document.getElementById('chart-title').textContent=title;
     document.getElementById('chart-description').textContent=description;
-    document.getElementById('chart').innerHTML=count?svg(body,height,title,description):`<p class="chart-empty">${empty}</p>`;
+    document.getElementById('chart').innerHTML=count?svg(body,height,title,description,plotWidth):`<p class="chart-empty">${empty}</p>`;
     document.getElementById('chart-legend').innerHTML=legend;
     document.getElementById('download-chart').disabled=!count;
     bindTooltips();

@@ -1,3 +1,7 @@
+<p align="center">
+  <a href="https://yifan-lan.github.io/DecisionRobust/"><img src="website/favicon.svg" width="88" height="88" alt="DecisionRobust logo"></a>
+</p>
+
 # DecisionRobust
 
 A benchmark for decision model reliability across text, structured inputs, and images.
@@ -46,7 +50,7 @@ Install Playwright in a development environment (`pip install playwright` and `p
 
 ## Interactive charts
 
-- **Ranked bars:** choose one of the five release datasets and show the 10 or 20 lowest ASRs, or all eligible models. Search and manual model selections apply to the chart.
+- **Ranked bars:** vertical bars place models on the horizontal axis and ASR on the vertical axis. Choose one of the five release datasets and show the 10 or 20 lowest ASRs, or all eligible models. Search and manual model selections apply to the chart.
 - **Across datasets:** compare ASR or within-dataset rank. Without manual selections, the six lowest-ASR models on the reference dataset form the default comparison. Use **Choose models** or the table checkboxes to customize it.
 - **Full coverage only:** excludes partial-coverage evaluations from the chart and its ranking pool. Ranks use all eligible models in each dataset, not just the displayed selection; tied ASRs share a rank. The underlying table always retains coverage details.
 - Missing results remain gaps. Hover or keyboard-focus marks for ASR, numerator/denominator, clean accuracy, coverage, and selection status. Export the current plot as SVG.
