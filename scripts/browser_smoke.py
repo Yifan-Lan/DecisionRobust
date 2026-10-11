@@ -21,7 +21,7 @@ async def main():
   await page.locator('#model-search').fill('KEV')
   assert await page.locator('#results-table tbody tr').count()==2
   await page.locator('#model-search').fill('')
-  await page.locator('[data-model="jev"]').check()
+  await page.locator('input[data-model="jev"]').check()
   await page.locator('#selected-only').check()
   assert await page.locator('#results-table tbody tr').count()==1
   await page.locator('#reset-models').click()

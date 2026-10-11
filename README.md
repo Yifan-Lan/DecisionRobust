@@ -5,7 +5,7 @@ A benchmark for decision model reliability across text, structured inputs, and i
 - **Website:** https://Yifan-Lan.github.io/DecisionRobust/
 - **Dataset and results:** https://huggingface.co/datasets/yflantmy/DecisionRobust
 
-The website provides a sortable leaderboard, model comparison, and clean/attacked example explorer across five curated release sets. Paper and evaluation code are being prepared for release.
+The website provides a sortable leaderboard, interactive ASR ranking bars and cross-dataset line charts, model comparison, and a clean/attacked example explorer across five curated release sets. Paper and evaluation code are being prepared for release.
 
 ## Run locally
 
@@ -43,3 +43,12 @@ Dataset provenance and licensing are documented in the [dataset card](https://hu
 ## Optional browser checks
 
 Install Playwright in a development environment (`pip install playwright` and `playwright install chromium`), start the local server, and run `python scripts/browser_smoke.py`. The checks cover all populated suite/scenario combinations, sorting and model filtering, image display, shareable URLs, and mobile overflow. Set `SITE_URL` to check a deployed site.
+
+## Interactive charts
+
+- **Ranked bars:** choose one of the five release datasets and show the 10 or 20 lowest ASRs, or all eligible models. Search and manual model selections apply to the chart.
+- **Across datasets:** compare ASR or within-dataset rank. Without manual selections, the six lowest-ASR models on the reference dataset form the default comparison. Use **Choose models** or the table checkboxes to customize it.
+- **Full coverage only:** excludes partial-coverage evaluations from the chart and its ranking pool. Ranks use all eligible models in each dataset, not just the displayed selection; tied ASRs share a rank. The underlying table always retains coverage details.
+- Missing results remain gaps. Hover or keyboard-focus marks for ASR, numerator/denominator, clean accuracy, coverage, and selection status. Export the current plot as SVG.
+
+Run `python scripts/chart_smoke.py` for chart-value, rank, filtering, export, and responsive-layout checks. Chart changes do not alter the pinned dataset or result metrics.

@@ -7,6 +7,7 @@ const labels = {sst2:'SST-2',mmlu:'MMLU',aegis2:'Aegis 2.0',bfcl:'BFCL',gui:'GUI
 const label = value => labels[value] || String(value).replaceAll('_',' ').replace(/\b\w/g, c => c.toUpperCase());
 let data, index, suite='overview', sortKey='name', ascending=true, selected=new Set(), filtered=[], currentSample=null, sampleSequence=0;
 const params = new URLSearchParams(location.search);
+let chartMode=params.get('chart')==='lines'?'lines':'bars';
 async function fetchJSON(url) { const response=await fetch(url); if(!response.ok) throw new Error(`${url}: HTTP ${response.status}`); return response.json(); }
 function selectOptions(element, values, title, previous='') {
   element.replaceChildren();
@@ -18,6 +19,11 @@ function saveView(){
  const p=new URLSearchParams(); p.set('suite',suite);
  for(const id of ['example-suite','scenario','source','attack','sample']) if($(id).value)p.set(id,$(id).value);
  if(selected.size)p.set('models',[...selected].join(','));
+ p.set('chart',chartMode);
+ if($('model-search').value)p.set('search',$('model-search').value);
+ if($('selected-only').checked)p.set('selected-only','1');
+ for(const key of ['chart-suite','chart-limit','chart-measure']) if($(key).value)p.set(key,$(key).value);
+ if($('chart-complete').checked)p.set('chart-complete','1');
  history.replaceState(null,'',`${location.pathname}?${p}${location.hash}`);
 }
 function metric(model,config){return data.results[config].find(r=>r.model===model);}
@@ -27,6 +33,15 @@ function asrCell(r){
  const reason=Object.entries(r.excluded_reasons||{}).map(([k,v])=>`${k}: ${v}`).join('; ');
  if(!r.denominator)return `<td title="${esc(reason)}">—<small>${r.valid_pairs?'No clean-correct pairs':'Unsupported / unavailable'}</small></td>`;
  return `<td title="${esc(`${r.successes} successes / ${r.denominator} clean-correct pairs; ${r.valid_pairs}/${r.candidates} valid. ${reason}`)}"><span class="asr-number">${pct(r.asr)}</span>${r.used_for_selection?'<sup class="dagger">†</sup>':''}${r.valid_pairs<r.candidates?'<span class="dot" aria-label="Partial coverage"></span>':''}<small>${r.successes} / ${r.denominator}</small><div class="meter"><span style="width:${r.asr*100}%"></span></div></td>`;
+}
+function renderChart(){
+ if(!data||!$('chart-suite').value)return;
+ const lines=chartMode==='lines';
+ $('chart-picker-label').textContent=`Choose models${selected.size?` · ${selected.size} selected`:' · automatic selection'}`;
+ $('chart-models').innerHTML=Object.entries(data.models).sort((a,b)=>a[1].localeCompare(b[1])).map(([id,name])=>`<label><input type="checkbox" data-compare="${esc(id)}" ${selected.has(id)?'checked':''}>${esc(name)}</label>`).join('');
+ $('chart-limit-label').hidden=lines;$('chart-measure-label').hidden=!lines;
+ document.querySelectorAll('[data-chart]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.chart===chartMode)));
+ DecisionCharts.render({data,config:$('chart-suite').value,mode:chartMode,measure:$('chart-measure').value,limit:$('chart-limit').value,complete:$('chart-complete').checked,selected,search:$('model-search').value,onlySelected:$('selected-only').checked});
 }
 function renderTable(){
  let rows=Object.entries(data.models).filter(([id,name])=>name.toLowerCase().includes($('model-search').value.toLowerCase())&&(!$('selected-only').checked||selected.has(id)));
@@ -40,8 +55,9 @@ function renderTable(){
  const r=metric(id,suite);return '<tr>'+first+asrCell(r)+`<td>${pct(r?.clean_accuracy_on_valid_pairs)}</td><td>${pct(r?.adv_accuracy_on_valid_pairs)}</td><td>${r?`${r.valid_pairs} / ${r.candidates}<small>${r.excluded_pairs} excluded</small>`:'—'}</td></tr>`;}).join('') || '<tr><td colspan="6">No matching models. Clear search or selection filters.</td></tr>';
  $('result-count').textContent=`${rows.length} models · ${selected.size} selected`;
  $('table-help').textContent=suite==='overview'?'Click a suite column to sort by ASR. No single aggregate rank is imposed across different tasks.':`${data.suites[suite][1]} ${data.info.collections[suite].candidates} candidates; ${data.info.collections[suite].original_questions} original questions. Accuracy uses valid candidate pairs.`;
+ renderChart();
 }
-function setSuite(value){suite=value;sortKey=suite==='overview'?'name':'asr';ascending=true;renderTabs();renderTable();saveView();}
+function setSuite(value){suite=value;if(suite!=='overview')$('chart-suite').value=suite;sortKey=suite==='overview'?'name':'asr';ascending=true;renderTabs();renderTable();saveView();}
 function updateFilters(level=0, initial=false){
  let rows=index.filter(r=>r.config===$('example-suite').value);
  for(const [i,id] of ['scenario','source','attack'].entries()){
@@ -92,6 +108,12 @@ async function main(){
  const citation=await fetch('data/CITATION.bib');$('citation').textContent=await citation.text();
  if(params.get('suite')==='overview'||data.suites[params.get('suite')])suite=params.get('suite');
  selected=new Set((params.get('models')||'').split(',').filter(m=>data.models[m]));
+ selectOptions($('chart-suite'),Object.entries(data.suites).map(([k,v])=>[k,v[0]]),null,params.get('chart-suite')||(suite!=='overview'?suite:''));
+ if(['10','20','all'].includes(params.get('chart-limit')))$('chart-limit').value=params.get('chart-limit');
+ if(params.get('chart-measure')==='rank')$('chart-measure').value='rank';
+ $('chart-complete').checked=params.get('chart-complete')==='1';
+ $('model-search').value=params.get('search')||'';
+ $('selected-only').checked=params.get('selected-only')==='1';
  sortKey=suite==='overview'?'name':'asr';renderTabs();renderTable();
  selectOptions($('details-model'),Object.entries(data.models).sort((a,b)=>a[1].localeCompare(b[1])),null);
  const details=()=>{$('details-json').textContent=JSON.stringify(data.model_details[$('details-model').value]||{},null,2);};details();$('details-model').onchange=details;
@@ -101,7 +123,12 @@ async function main(){
  $('suite-tabs').onclick=e=>{const b=e.target.closest('[data-suite]');if(b)setSuite(b.dataset.suite);};
  $('results-table').onclick=e=>{const b=e.target.closest('[data-sort]');if(b){if(sortKey===b.dataset.sort)ascending=!ascending;else{sortKey=b.dataset.sort;ascending=true;}renderTable();}};
  $('results-table').onchange=e=>{const id=e.target.dataset.model;if(id){e.target.checked?selected.add(id):selected.delete(id);renderTable();saveView();}};
- $('model-search').oninput=renderTable;$('selected-only').onchange=renderTable;$('reset-models').onclick=()=>{selected.clear();$('selected-only').checked=false;renderTable();saveView();};
+ document.querySelectorAll('[data-chart]').forEach(b=>b.onclick=()=>{chartMode=b.dataset.chart;renderChart();saveView();});
+ for(const id of ['chart-limit','chart-measure','chart-complete'])$(id).onchange=()=>{renderChart();saveView();};
+ $('chart-suite').onchange=()=>{if(suite!=='overview')setSuite($('chart-suite').value);else{renderChart();saveView();}};
+ $('download-chart').onclick=DecisionCharts.download;
+ $('chart-models').onchange=e=>{const id=e.target.dataset.compare;if(id){e.target.checked?selected.add(id):selected.delete(id);renderTable();saveView();}};
+ $('model-search').oninput=()=>{renderTable();saveView();};$('selected-only').onchange=()=>{renderTable();saveView();};$('reset-models').onclick=()=>{selected.clear();$('selected-only').checked=false;renderTable();saveView();};
  $('example-suite').onchange=()=>updateFilters(0);
  ['scenario','source','attack'].forEach((id,i)=>$(id).onchange=()=>updateFilters(i+1));
  $('sample').onchange=showSample;
