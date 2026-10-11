@@ -23,15 +23,15 @@ window.DecisionCharts = (() => {
       title=`${titleName} · ASR ranking`;
       description=`${rows.length} of ${anchor.length} eligible ${selected.size?'selected ':''}models shown, ordered by ASR. ${complete?'Full coverage required.':'Partial coverage included.'} Hover or focus a bar for accuracy, coverage, and denominator.`;
       if(rows.length){
-        height=560;plotWidth=Math.max(1000,rows.length*85+200);
-        const left=165,right=plotWidth-40,top=44,bottom=320,step=(right-left)/rows.length,barWidth=Math.min(52,step*.65);
+        height=640;plotWidth=Math.max(1000,rows.length*30+150);
+        const left=125,right=plotWidth-25,top=95,bottom=365,step=(right-left)/rows.length,barWidth=Math.min(52,step*.65);
         for(let v=0;v<=100;v+=20){const y=bottom-(bottom-top)*v/100;body+=`<path d="M${left} ${y}H${right}" stroke="#e6ebf3"/>`+text(left-16,y+4,`${v}%`,'text-anchor="end" fill="#718099" font-size="11"');}
         body+=text(left,18,'ASR · LOWER IS BETTER','fill="#718099" font-size="10" letter-spacing="1"');
-        body+=text((left+right)/2,540,'MODEL / RANK','text-anchor="middle" fill="#718099" font-size="10" letter-spacing="1"');
+        body+=text((left+right)/2,620,'MODEL / RANK','text-anchor="middle" fill="#718099" font-size="10" letter-spacing="1"');
         rows.forEach((r,i)=>{const x=left+step*(i+.5),rank=rankMaps[config].get(r.model),partial=r.valid_pairs<r.candidates,barHeight=r.asr*(bottom-top),y=bottom-barHeight;
-          body+=text(x,342,`#${rank}`,'text-anchor="middle" fill="#7b88a1" font-size="10"');
-          body+=text(x+3,363,r.model_name,`font-size="11" text-anchor="end" transform="rotate(-45 ${x+3} 363)"`);
-          body+=mark(r,rank,titleName,`<rect x="${x-step/2}" y="${top}" width="${step}" height="${bottom-top}" fill="transparent"/><rect class="focus-ring" x="${x-barWidth/2}" y="${y}" width="${barWidth}" height="${barHeight}" rx="2" fill="${i===0?'#142b62':'#5676d6'}"${partial?' fill-opacity=".55"':''}/>${r.asr===0?`<path d="M${x-barWidth/2} ${bottom}h${barWidth}" stroke="#315cda" stroke-width="2"/>`:''}${text(x,y-10,`${percent(r.asr)}${r.used_for_selection?' †':''}${partial?' ○':''}`,'text-anchor="middle" font-size="11" font-weight="600" fill="#203d87"')}`);
+          body+=text(x,385,`#${rank}`,'text-anchor="middle" fill="#7b88a1" font-size="10"');
+          body+=text(x+3,405,r.model_name,`font-size="11" text-anchor="end" transform="rotate(-60 ${x+3} 405)"`);
+          body+=mark(r,rank,titleName,`<rect x="${x-step/2}" y="${top}" width="${step}" height="${bottom-top}" fill="transparent"/><rect class="focus-ring" x="${x-barWidth/2}" y="${y}" width="${barWidth}" height="${barHeight}" rx="2" fill="${i===0?'#142b62':'#5676d6'}"${partial?' fill-opacity=".55"':''}/>${r.asr===0?`<path d="M${x-barWidth/2} ${bottom}h${barWidth}" stroke="#315cda" stroke-width="2"/>`:''}${text(x,y-10,`${percent(r.asr)}${r.used_for_selection?' †':''}${partial?' ○':''}`,`text-anchor="${rows.length>15?'start':'middle'}" font-size="${rows.length>15?10:11}" font-weight="600" fill="#203d87"${rows.length>15?` transform="rotate(-60 ${x} ${y-10})"`:''}`)}`);
         });
       }
     }else{

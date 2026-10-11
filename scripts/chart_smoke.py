@@ -11,7 +11,8 @@ async def main():
   page=await browser.new_page(viewport={'width':1440,'height':1100},device_scale_factor=1)
   errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   await page.goto(BASE,wait_until='networkidle');await page.wait_for_selector('.ground-truth')
-  assert await page.locator('.chart-mark').count()==10
+  assert await page.locator('#chart-limit').input_value()=='all'
+  assert await page.locator('.chart-mark').count()==30
   metrics=await page.evaluate('data.results')
   async def verify_values():
    marks=await page.locator('.chart-mark').evaluate_all('(els)=>els.map(e=>({...e.dataset}))')
@@ -25,7 +26,7 @@ async def main():
   await verify_values()
   bars=await page.locator('.chart-mark .focus-ring').evaluate_all('(els)=>els.map(e=>({x:+e.getAttribute("x"),y:+e.getAttribute("y"),height:+e.getAttribute("height"),width:+e.getAttribute("width"),asr:+e.parentElement.dataset.asr}))')
   assert all(bars[i]['x']<bars[i+1]['x'] for i in range(len(bars)-1))
-  assert all(abs(b['height']-b['asr']*276)<1e-9 and abs(b['height']+b['y']-320)<1e-9 for b in bars)
+  assert all(abs(b['height']-b['asr']*270)<1e-9 and abs(b['height']+b['y']-365)<1e-9 for b in bars)
   await page.screenshot(path=str(OUT/'desktop.png'),full_page=True)
   await page.locator('.chart-card').screenshot(path=str(OUT/'bars.png'))
   await page.locator('.chart-mark').first.focus()

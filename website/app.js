@@ -19,7 +19,7 @@ function saveView(){
  const p=new URLSearchParams(); p.set('suite',suite);
  for(const id of ['example-suite','scenario','source','attack','sample']) if($(id).value)p.set(id,$(id).value);
  if(selected.size)p.set('models',[...selected].join(','));
- p.set('chart',chartMode);
+ p.set('chart',chartMode);p.set('chart-version','2');
  if($('model-search').value)p.set('search',$('model-search').value);
  if($('selected-only').checked)p.set('selected-only','1');
  for(const key of ['chart-suite','chart-limit','chart-measure']) if($(key).value)p.set(key,$(key).value);
@@ -109,7 +109,7 @@ async function main(){
  if(params.get('suite')==='overview'||data.suites[params.get('suite')])suite=params.get('suite');
  selected=new Set((params.get('models')||'').split(',').filter(m=>data.models[m]));
  selectOptions($('chart-suite'),Object.entries(data.suites).map(([k,v])=>[k,v[0]]),null,params.get('chart-suite')||(suite!=='overview'?suite:''));
- if(['10','20','all'].includes(params.get('chart-limit')))$('chart-limit').value=params.get('chart-limit');
+ if(params.get('chart-version')==='2'&&['10','20','all'].includes(params.get('chart-limit')))$('chart-limit').value=params.get('chart-limit');
  if(params.get('chart-measure')==='rank')$('chart-measure').value='rank';
  $('chart-complete').checked=params.get('chart-complete')==='1';
  $('model-search').value=params.get('search')||'';
