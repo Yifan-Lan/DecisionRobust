@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://yifan-lan.github.io/DecisionRobust/"><img src="website/favicon.svg" width="88" height="88" alt="DecisionRobust logo"></a>
+  <a href="https://yifan-lan.github.io/DecisionRobust/"><img src="website/favicon.svg?v=logo-a-1" width="88" height="88" alt="DecisionRobust logo"></a>
 </p>
 
 # DecisionRobust
