@@ -40,6 +40,7 @@ async def main():
   # Image requests and full-size modal.
   await page.select_option('#example-suite','image_perturbation_curated')
   await page.wait_for_selector('.panel img')
+  await page.locator('.panel img').first.scroll_into_view_if_needed()
   await page.wait_for_function('Array.from(document.querySelectorAll(".panel img")).every(i=>i.complete && i.naturalWidth>0)',timeout=90000)
   await page.locator('.panel img').first.click()
   assert await page.locator('#image-dialog').is_visible()
