@@ -26,13 +26,14 @@ function saveView(){
  if($('chart-complete').checked)p.set('chart-complete','1');
  history.replaceState(null,'',`${location.pathname}?${p}${location.hash}`);
 }
+const asrName = config => data.results[config]?.some(r=>r.asr_type==='targeted')?'Target ASR':'Flip ASR';
 function metric(model,config){return data.results[config].find(r=>r.model===model);}
 function renderTabs(){ $('suite-tabs').innerHTML=['overview',...Object.keys(data.suites)].map(c=>`<button data-suite="${c}" aria-pressed="${suite===c}">${c==='overview'?'All suites':esc(data.suites[c][0])}</button>`).join(''); }
 function asrCell(r){
  if(!r)return '<td><span class="muted">—</span><small>Not measured</small></td>';
  const reason=Object.entries(r.excluded_reasons||{}).map(([k,v])=>`${k}: ${v}`).join('; ');
  if(!r.denominator)return `<td title="${esc(reason)}">—<small>${r.valid_pairs?'No clean-correct pairs':'Unsupported / unavailable'}</small></td>`;
- return `<td title="${esc(`${r.successes} successes / ${r.denominator} clean-correct pairs; ${r.valid_pairs}/${r.candidates} valid. ${reason}`)}"><span class="asr-number">${pct(r.asr)}</span>${r.used_for_selection?'<sup class="dagger">†</sup>':''}${r.valid_pairs<r.candidates?'<span class="dot" aria-label="Partial coverage"></span>':''}<small>${r.successes} / ${r.denominator}</small><div class="meter"><span style="width:${r.asr*100}%"></span></div></td>`;
+ return `<td title="${esc(`${r.asr_type==='targeted'?'Target ASR':'Flip ASR'}: ${r.successes} successes / ${r.denominator} clean-correct pairs; ${r.valid_pairs}/${r.candidates} valid. ${reason}`)}"><span class="asr-number">${pct(r.asr)}</span>${r.used_for_selection?'<sup class="dagger">†</sup>':''}${r.valid_pairs<r.candidates?'<span class="dot" aria-label="Partial coverage"></span>':''}<small>${r.successes} / ${r.denominator}</small><div class="meter"><span style="width:${r.asr*100}%"></span></div></td>`;
 }
 function renderChart(){
  if(!data||!$('chart-suite').value)return;
@@ -47,14 +48,14 @@ function renderTable(){
  let rows=Object.entries(data.models).filter(([id,name])=>name.toLowerCase().includes($('model-search').value.toLowerCase())&&(!$('selected-only').checked||selected.has(id)));
  const value=([id,name])=>{if(sortKey==='name')return name; const r=metric(id,suite==='overview'?sortKey:suite); return r? (suite==='overview'?r.asr:sortKey==='coverage'?r.valid_pairs/r.candidates:r[sortKey]):null;};
  rows.sort((a,b)=>{const av=value(a),bv=value(b);if(av==null)return bv==null?0:1;if(bv==null)return -1;return(typeof av==='string'?av.localeCompare(bv):av-bv)*(ascending?1:-1);});
- const cols=suite==='overview'?Object.entries(data.suites).map(([id,[name]])=>[id,`${name} ASR`]):[['asr','ASR ↓'],['clean_accuracy_on_valid_pairs','Clean accuracy'],['adv_accuracy_on_valid_pairs','Adv. accuracy'],['coverage','Valid coverage']];
+ const cols=suite==='overview'?Object.entries(data.suites).map(([id,[name]])=>[id,`${name} · ${asrName(id)}`]):[['asr',`${asrName(suite)} ↓`],['clean_accuracy_on_valid_pairs','Clean accuracy'],['adv_accuracy_on_valid_pairs','Adv. accuracy'],['coverage','Valid coverage']];
  const header=([key,name])=>`<th scope="col" aria-sort="${sortKey===key?(ascending?'ascending':'descending'):'none'}"><button data-sort="${key}">${esc(name)}${sortKey===key?(ascending?' ↑':' ↓'):''}</button></th>`;
  $('results-table').tHead.innerHTML='<tr>'+header(['name','Model'])+cols.map(header).join('')+'</tr>';
  $('results-table').tBodies[0].innerHTML=rows.map(([id,name])=>{const first=`<td><label style="font:inherit;letter-spacing:0"><input type="checkbox" data-model="${esc(id)}" ${selected.has(id)?'checked':''} aria-label="Compare ${esc(name)}">${esc(name)}</label></td>`;
  if(suite==='overview') return '<tr>'+first+cols.map(([c])=>asrCell(metric(id,c))).join('')+'</tr>';
  const r=metric(id,suite);return '<tr>'+first+asrCell(r)+`<td>${pct(r?.clean_accuracy_on_valid_pairs)}</td><td>${pct(r?.adv_accuracy_on_valid_pairs)}</td><td>${r?`${r.valid_pairs} / ${r.candidates}<small>${r.excluded_pairs} excluded</small>`:'—'}</td></tr>`;}).join('') || '<tr><td colspan="6">No matching models. Clear search or selection filters.</td></tr>';
  $('result-count').textContent=`${rows.length} models · ${selected.size} selected`;
- $('table-help').textContent=suite==='overview'?'Click a suite column to sort by ASR. No single aggregate rank is imposed across different tasks.':`${data.suites[suite][1]} ${data.info.collections[suite].candidates} candidates; ${data.info.collections[suite].original_questions} original questions. Accuracy uses valid candidate pairs.`;
+ $('table-help').textContent=suite==='overview'?'Injection suites use Target ASR; text adversarial and image perturbation use Flip ASR. Click a column to sort. No pooled rank across suites.':`${asrName(suite)}. ${data.suites[suite][1]} ${data.info.collections[suite].candidates} candidates; ${data.info.collections[suite].original_questions} original questions. Accuracy uses valid candidate pairs.`;
  renderChart();
 }
 function setSuite(value){suite=value;if(suite!=='overview')$('chart-suite').value=suite;sortKey=suite==='overview'?'name':'asr';ascending=true;renderTabs();renderTable();saveView();}
@@ -98,7 +99,9 @@ async function showSample(){
  const panel=side=>{const images=(row[side].images||[]).map((path,i)=>`<img src="${esc(imageURL(path))}" loading="lazy" alt="${side==='clean'?'Clean':'Attacked'} image ${i+1} for example ${row.id}" data-expand><div class="image-hint">Click image to inspect at full size.</div>`).join('');
  return `<article class="panel ${side==='adv'?'adv':''}"><h3>${side==='clean'?'Original input':'Attacked input'}</h3>${images}<div class="panel-content">${diffs.length?diffs.map(d=>`<div class="path">${esc(d.path)}</div><div class="change">${highlight(d.a,d.b,side)}</div>`).join(''):'<p class="muted">Text fields unchanged. The perturbation is in the image.</p>'}</div><details><summary>Full native ${side} request</summary><pre>${esc(JSON.stringify(row[side],null,2))}</pre></details></article>`;};
  const questions=Object.fromEntries(row.task.question_ids.map(q=>[q,row.clean.questions[q]]));
- $('example').innerHTML=`<div class="badges">${[`Example #${row.id}`,`Original #${row.original_id}`,label(row.source),label(row.scenario),label(row.attack),label(row.task.mode)].map(x=>`<span class="badge">${esc(x)}</span>`).join('')}</div><details class="question-box" open><summary>Question and answer options (clean)</summary><pre>${esc(JSON.stringify(questions,null,2))}</pre></details><div class="pair">${panel('clean')}${panel('adv')}</div><div class="ground-truth"><strong>Ground truth:</strong> ${esc(pretty(row.gt))}<br><span class="muted">Scored question IDs: ${esc(row.task.question_ids.join(', '))}. Full requests retain every question.</span></div>`;
+ const injectionTarget=data.injection_targets?.[`${config}:${row.id}`];
+ const targetDisplay=injectionTarget?`<br><strong>Injection target:</strong> ${esc(pretty(injectionTarget.target))}${row.task.mode==='score'?' (native weighted score within ±0.5, and incorrect against GT)':''}`:'';
+ $('example').innerHTML=`<div class="badges">${[`Example #${row.id}`,`Original #${row.original_id}`,label(row.source),label(row.scenario),label(row.attack),label(row.task.mode)].map(x=>`<span class="badge">${esc(x)}</span>`).join('')}</div><details class="question-box" open><summary>Question and answer options (clean)</summary><pre>${esc(JSON.stringify(questions,null,2))}</pre></details><div class="pair">${panel('clean')}${panel('adv')}</div><div class="ground-truth"><strong>Ground truth:</strong> ${esc(pretty(row.gt))}${targetDisplay}<br><span class="muted">Scored question IDs: ${esc(row.task.question_ids.join(', '))}. Full requests retain every question.</span></div>`;
  }catch(e){if(seq===sampleSequence)$('example').textContent=`Could not load example: ${e.message}`;}
 }
 async function main(){

@@ -8,7 +8,8 @@ window.DecisionCharts = (() => {
   const ranks = rows => new Map(rows.map(r=>[r.model,1+rows.filter(o=>o.asr<r.asr).length]));
   const text=(x,y,value,attrs='')=>`<text x="${x}" y="${y}" ${attrs}>${e(value)}</text>`;
   const shortNames=['Text adversarial','Text injection','Image perturbation','Image overlay','Image instruction'];
-  function tooltip(r,rank,suite){return `${r.model_name}\n${suite}\nASR ${percent(r.asr)} · rank ${rank}\n${r.successes} / ${r.denominator} clean-correct pairs\nClean accuracy ${percent(r.clean_accuracy_on_valid_pairs)}\nValid coverage ${r.valid_pairs} / ${r.candidates}${r.used_for_selection?'\n† Used in selecting this suite':''}`;}
+  const metricName=r=>r?.asr_type==='targeted'?'Target ASR':'Flip ASR';
+  function tooltip(r,rank,suite){return `${r.model_name}\n${suite}\n${metricName(r)} ${percent(r.asr)} · rank ${rank}\n${r.successes} / ${r.denominator} clean-correct pairs\nClean accuracy ${percent(r.clean_accuracy_on_valid_pairs)}\nValid coverage ${r.valid_pairs} / ${r.candidates}${r.used_for_selection?'\n† Used in selecting this suite':''}`;}
   function mark(r,rank,suite,shape){const tip=tooltip(r,rank,suite);return `<g class="chart-mark" tabindex="0" role="img" aria-label="${e(tip)}" data-model="${e(r.model)}" data-config="${e(r.config)}" data-asr="${r.asr}" data-rank="${rank}" data-tip="${e(tip)}"><title>${e(tip)}</title>${shape}</g>`;}
   function svg(body,height,title,desc,width=1000){return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="plot-title plot-desc" style="font-family:system-ui,sans-serif;font-size:12px;fill:#35435d;background:white;min-width:${width>1000?width:680}px"><title id="plot-title">${e(title)}</title><desc id="plot-desc">${e(desc)}</desc>${body}</svg>`;}
   function render({data,config,mode,measure,limit,complete,selected,search,onlySelected}){
@@ -20,13 +21,13 @@ window.DecisionCharts = (() => {
     const titleName=data.suites[config][0];
     if(mode==='bars'){
       const rows=anchor.slice(0,limit==='all'?Infinity:Number(limit));count=rows.length;
-      title=`${titleName} · ASR ranking`;
+      title=`${titleName} · ${metricName(data.results[config][0])} ranking`;
       description=`${rows.length} of ${anchor.length} eligible ${selected.size?'selected ':''}models shown, ordered by ASR. ${complete?'Full coverage required.':'Partial coverage included.'} Hover or focus a bar for accuracy, coverage, and denominator.`;
       if(rows.length){
         height=640;plotWidth=Math.max(1000,rows.length*30+150);
         const left=125,right=plotWidth-25,top=95,bottom=365,step=(right-left)/rows.length,barWidth=Math.min(52,step*.65);
         for(let v=0;v<=100;v+=20){const y=bottom-(bottom-top)*v/100;body+=`<path d="M${left} ${y}H${right}" stroke="#e6ebf3"/>`+text(left-16,y+4,`${v}%`,'text-anchor="end" fill="#718099" font-size="11"');}
-        body+=text(left,18,'ASR · LOWER IS BETTER','fill="#718099" font-size="10" letter-spacing="1"');
+        body+=text(left,18,`${metricName(data.results[config][0]).toUpperCase()} · LOWER IS BETTER`,'fill="#718099" font-size="10" letter-spacing="1"');
         body+=text((left+right)/2,620,'MODEL / RANK','text-anchor="middle" fill="#718099" font-size="10" letter-spacing="1"');
         rows.forEach((r,i)=>{const x=left+step*(i+.5),rank=rankMaps[config].get(r.model),partial=r.valid_pairs<r.candidates,barHeight=r.asr*(bottom-top),y=bottom-barHeight;
           body+=text(x,385,`#${rank}`,'text-anchor="middle" fill="#7b88a1" font-size="10"');
@@ -39,9 +40,9 @@ window.DecisionCharts = (() => {
       // Explicitly selected models may have no measurement on that reference dataset.
       const ids=selected.size?[...selected].filter(id=>data.models[id]?.toLowerCase().includes(search.toLowerCase())):anchor.slice(0,6).map(r=>r.model);
       const visible=ids.filter(id=>configs.some(c=>pools[c].some(r=>r.model===id)));count=visible.length;
-      title=measure==='rank'?'Rank across datasets':'ASR across datasets';
+      title=measure==='rank'?'Rank across datasets':'ASR across datasets · Target / Flip';
       description=selected.size?`${visible.length} selected models with eligible results. Use Choose models to change the comparison.`:`Default comparison: up to six lowest-ASR models on ${titleName}. Use Choose models to choose your own comparison.`;
-      description+=' Dataset categories are not a time series; lines connect adjacent available results only.';
+      description+=' Injection: Target ASR; other suites: Flip ASR. Dataset categories are not a time series; lines connect adjacent available results only.';
       if(visible.length){
         height=400;const left=70,right=910,top=36,bottom=318;
         const maxRank=Math.max(2,...configs.map(c=>pools[c].length));
@@ -49,7 +50,7 @@ window.DecisionCharts = (() => {
         const y=r=>measure==='rank'?top+(r-1)/(maxRank-1)*(bottom-top):bottom-r*(bottom-top);
         const ticks=measure==='rank'?[...new Set([1,...Array.from({length:Math.floor(maxRank/5)},(_,i)=>(i+1)*5),maxRank])]:[0,.2,.4,.6,.8,1];
         for(const tick of ticks)body+=`<path d="M${left} ${y(tick)}H${right}" stroke="#e4eaf3"/>`+text(left-15,y(tick)+4,measure==='rank'?`#${tick}`:percent(tick),'text-anchor="end" fill="#718099" font-size="11"');
-        body+=text(left,16,measure==='rank'?'RANK · 1 IS BEST':'ASR · LOWER IS BETTER','fill="#66738b" font-size="10" letter-spacing="1"');
+        body+=text(left,16,measure==='rank'?'RANK · 1 IS BEST':'ASR: TARGET / FLIP · LOWER IS BETTER','fill="#66738b" font-size="10" letter-spacing="1"');
         configs.forEach((c,i)=>{body+=`<path d="M${x(i)} ${top}V${bottom}" stroke="#eef1f7"/>`+text(x(i),345,shortNames[i],'text-anchor="middle" font-size="11"');body+=text(x(i),364,`${pools[c].length} eligible models`,'text-anchor="middle" font-size="9" fill="#78869d"');});
         // Draw connections first so every marker remains above every line.
         const series=visible.map((id,i)=>({id,color:colors[i%colors.length],dash:i>=colors.length?'5 4':null,points:configs.map((c,k)=>{const r=pools[c].find(v=>v.model===id);return r?{r,rank:rankMaps[c].get(id),x:x(k),y:y(measure==='rank'?rankMaps[c].get(id):r.asr),c}:null;})}));

@@ -35,6 +35,9 @@ def main():
         return data
     results = json.loads(checked('results/asr.json', CONFIG['results_revision']))
     details = json.loads(checked('results/model_details.json', CONFIG['results_revision']))
+    targets = json.loads(checked('results/injection_targets.json', CONFIG['results_revision']))
+    target_map = {f"{r['config']}:{r['id']}": r for r in targets}
+    assert len(target_map) == len(targets) == 717
     info = json.loads(checked('dataset_info.json', CONFIG['data_revision']))
     out = ROOT / 'website/data'
     if out.exists():
@@ -49,11 +52,18 @@ def main():
         for row in rows:
             assert row['id'] not in seen, 'Duplicate public candidate ID'
             seen.add(row['id']); originals.add(row['original_id'])
+            if config.endswith(('injection_curated', 'overlay_curated', 'instruction_curated')):
+                t = target_map[f"{config}:{row['id']}"]
+                assert t['target'] != row['gt'] and t['question_ids'] == row['task']['question_ids']
             assert all(q in row['clean']['questions'] and q in row['adv']['questions'] for q in row['task']['question_ids'])
             # Native requests remain unchanged; image base URL is supplied separately.
             write(f'samples/{row["id"]}.json', row)
             index.append({k: row[k] for k in ['id', 'original_id', 'source', 'scenario', 'attack']} | {'config': config, 'mode': row['task']['mode']})
         for r in results[config]:
+            expected_type = 'targeted' if config in {'text_injection_curated','image_overlay_curated','image_instruction_curated'} else 'untargeted'
+            assert r['asr_type'] == expected_type
+            assert r['successes'] <= r['flip_successes']
+            if expected_type == 'targeted': assert r['asr'] == r['target_asr'] and r['successes'] == r['target_successes']
             assert 0 <= r['successes'] <= r['denominator'] <= r['valid_pairs'] <= len(rows)
             assert r['valid_pairs'] + r['excluded_pairs'] == r['candidates'] == len(rows)
             if r['denominator']:
@@ -61,7 +71,7 @@ def main():
     models = {r['model']: r['model_name'] for rows in results.values() for r in rows}
     assert len(index) == info['candidates'] and len(originals) == info['original_questions']
     write('index.json', index)
-    write('leaderboard.json', {'release': CONFIG, 'suites': SUITES, 'info': info, 'results': results, 'models': models, 'model_details': details})
+    write('leaderboard.json', {'release': CONFIG, 'suites': SUITES, 'info': info, 'results': results, 'models': models, 'model_details': details, 'injection_targets': target_map})
     (out / 'asr.csv').write_bytes(checked('results/asr.csv', CONFIG['results_revision']))
     (out / 'CITATION.bib').write_bytes(checked('CITATION.bib', CONFIG['results_revision']))
     print(f'Built {len(index)} candidates, {len(originals)} originals, {len(models)} models. All source hashes and metric bounds verified.')
