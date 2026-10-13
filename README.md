@@ -56,3 +56,7 @@ Install Playwright in a development environment (`pip install playwright` and `p
 - Missing results remain gaps. Hover or keyboard-focus marks for ASR, numerator/denominator, clean accuracy, coverage, and selection status. Export the current plot as SVG.
 
 Run `python scripts/chart_smoke.py` for chart-value, rank, filtering, export, and responsive-layout checks. Chart changes do not alter the pinned dataset or result metrics.
+
+## Submit a model
+
+Open a [model submission issue](https://github.com/Yifan-Lan/DecisionRobust/issues/new?template=model_submission.yml) with paired clean/adv outputs, an exact model version and evaluation settings. See the [submission guide](docs/submissions.md) for the JSONL template, local validation, PR checks and review process. Results stay off the leaderboard until the maintainer approves their exact file hashes and merges the approval. Public submissions never require sending API credentials.

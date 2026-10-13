@@ -1,0 +1,37 @@
+name: Validate model submission
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'submissions/entries/**'
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Use ONLY trusted base-branch code. Never check out or execute PR-head code.
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Load pinned benchmark references
+        run: |
+          python scripts/test_submissions.py
+          python scripts/build_site.py
+      - name: Check untrusted JSON outputs with trusted scoring code
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python scripts/check_submission_pr.py
+      - name: Attach checks for maintainer review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: submission-checks
+          path: submission-checks/
+          if-no-files-found: ignore

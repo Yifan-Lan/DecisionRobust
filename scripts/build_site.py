@@ -1,5 +1,6 @@
 """Build a static website snapshot from pinned, public Hugging Face files."""
 import argparse
+import csv
 import hashlib
 import json
 import pathlib
@@ -72,7 +73,21 @@ def main():
     assert len(index) == info['candidates'] and len(originals) == info['original_questions']
     write('index.json', index)
     write('leaderboard.json', {'release': CONFIG, 'suites': SUITES, 'info': info, 'results': results, 'models': models, 'model_details': details, 'injection_targets': target_map})
+    # Pending entries never affect rankings. Reviewed hashes pin each admitted file.
+    from validate_submission import merge_approved
+    merge_approved(results, details, out)
+    models = {r['model']: r['model_name'] for rows in results.values() for r in rows}
+    write('leaderboard.json', {'release': CONFIG, 'suites': SUITES, 'info': info, 'results': results, 'models': models, 'model_details': details, 'injection_targets': target_map})
     (out / 'asr.csv').write_bytes(checked('results/asr.csv', CONFIG['results_revision']))
+    if any(r.get('result_source') == 'community_reviewed' for rows in results.values() for r in rows):
+        flat = [r for rows in results.values() for r in rows]
+        fields = list(dict.fromkeys(k for r in flat for k in r))
+        def cell(v):
+            if isinstance(v, (dict,list)): v = json.dumps(v,ensure_ascii=False)
+            return "'"+v if isinstance(v,str) and v.startswith(('=','+','-','@','\t','\r')) else v
+        with (out/'asr.csv').open('w',newline='') as f:
+            writer=csv.DictWriter(f,fieldnames=fields);writer.writeheader()
+            writer.writerows({k:cell(v) for k,v in r.items()} for r in flat)
     (out / 'CITATION.bib').write_bytes(checked('CITATION.bib', CONFIG['results_revision']))
     print(f'Built {len(index)} candidates, {len(originals)} originals, {len(models)} models. All source hashes and metric bounds verified.')
 

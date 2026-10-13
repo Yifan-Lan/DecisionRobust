@@ -1,0 +1,71 @@
+name: Submit a model
+description: Request review of a new model's DecisionRobust results.
+title: '[Model submission] '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submissions and attachments are public. Do not include API keys or private credentials.
+        Review the [submission guide](https://github.com/Yifan-Lan/DecisionRobust/blob/main/docs/submissions.md).
+        This issue starts a review; it does not publish your model to the leaderboard.
+  - type: input
+    id: model
+    attributes:
+      label: Model name and exact version
+      placeholder: Model name, checkpoint revision or API model/version, evaluation date
+    validations:
+      required: true
+  - type: input
+    id: model_url
+    attributes:
+      label: Public model or API documentation URL
+    validations:
+      required: true
+  - type: checkboxes
+    id: suites
+    attributes:
+      label: Evaluated suites
+      options:
+        - label: text_adversarial_curated
+        - label: text_injection_curated
+        - label: image_perturbation_curated
+        - label: image_overlay_curated
+        - label: image_instruction_curated
+  - type: input
+    id: results
+    attributes:
+      label: Results PR or public result-file link
+      description: Provide manifest.json and predictions.jsonl; aggregate ASR alone is insufficient. Automated checks run once files are in a submission PR.
+    validations:
+      required: true
+  - type: input
+    id: code
+    attributes:
+      label: Evaluation code URL with commit or release
+    validations:
+      required: true
+  - type: textarea
+    id: settings
+    attributes:
+      label: Adapter, inference settings, and unsupported cases
+      description: Explain request conversion, image preprocessing, quantization, score/probability extraction, retries, and exclusions.
+    validations:
+      required: true
+  - type: textarea
+    id: training
+    attributes:
+      label: Benchmark data exposure
+      description: Was DecisionRobust used for training, tuning, prompt selection, or checkpoint selection? State what is known and unknown.
+    validations:
+      required: true
+  - type: checkboxes
+    id: agreement
+    attributes:
+      label: Evaluation checklist
+      options:
+        - label: I used the pinned public release and retained complete requests, including questions without GT.
+          required: true
+        - label: I provide clean and adversarial outputs for every candidate in each claimed suite, including explicit errors and unsupported cases.
+          required: true
+        - label: I understand automated checks do not establish authenticity or approval; a maintainer may request evidence or reruns.
+          required: true
