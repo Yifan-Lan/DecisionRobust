@@ -8,3 +8,7 @@ The Dr. monogram abbreviates DecisionRobust and evokes diagnosing decision relia
 Both files contain custom vector paths; no installed fonts are required. Preserve the aspect ratio and the red trace. Use at 24 px or larger when possible; the full wordmark is DecisionRobust.
 
 Colors: graphite `#151C2D`, off-white `#F6F7FB`, coral `#F05A4E`.
+
+## Hugging Face destination icon
+
+`huggingface.svg` is the official Hugging Face mark from https://huggingface.co/front/assets/huggingface_logo-noborder.svg (retrieved 2026-10-13). A `viewBox` matching its original 95 × 88 dimensions was added for responsive scaling; artwork is unchanged. Used to identify the dataset destination in the homepage button. The mark belongs to Hugging Face.
