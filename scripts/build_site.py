@@ -10,11 +10,11 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / 'site_config.json').read_text())
 SUITES = {
-    'text_adversarial_curated': ('Text adversarial', 'Meaning-preserving edits to text and structured inputs.'),
-    'text_injection_curated': ('Text injection', 'Output-hijacking instructions in text and structured inputs.'),
-    'image_perturbation_curated': ('Image perturbation', 'Common corruptions and optimization-based image perturbations.'),
-    'image_overlay_curated': ('Image overlay', 'Instruction text embedded in the image.'),
-    'image_instruction_curated': ('Image instruction', 'Injection appended to the question accompanying an image.'),
+    'text_adversarial_curated': ('Text adversarial', 'Meaning-preserving edits to text or structured inputs that aim to change the model’s decision while keeping the correct answer unchanged.'),
+    'text_injection_curated': ('Text injection', 'Instructions inserted into text or structured content, or into the task instructions, to steer the model toward a specified wrong answer.'),
+    'image_perturbation_curated': ('Image perturbation', 'Common visual corruptions (such as noise or blur) and optimized pixel changes that aim to cause an incorrect decision.'),
+    'image_overlay_curated': ('Image overlay', 'Instruction text drawn onto the image itself to steer the model toward a specified wrong answer.'),
+    'image_instruction_curated': ('Image instruction', 'Instructions appended to the question accompanying an unchanged image to steer the model toward a specified wrong answer.'),
 }
 
 def main():
