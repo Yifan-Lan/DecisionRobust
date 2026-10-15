@@ -16,3 +16,5 @@
 .hero-links{flex-wrap:wrap}.hero-links>a{min-height:48px}.hero-links .dataset-link{gap:10px;white-space:nowrap}.dataset-logo{display:block;width:24px;height:24px;object-fit:contain;flex:none}.dataset-arrow{margin-left:8px}
 
 .submission-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:28px 0}.submission-steps article{padding:24px;background:#fff;border:1px solid var(--line);border-radius:6px}.submission-steps p{color:var(--muted);font-size:13px}.step-number{display:block;font:12px ui-monospace,monospace;color:var(--accent);margin-bottom:14px}.submission-section .section-copy{max-width:650px;margin-bottom:0}.submission-section .primary{white-space:nowrap}.result-origin{font-weight:400;color:var(--muted);font-size:10px}@media(max-width:850px){.submission-steps{grid-template-columns:1fr}.submission-section .section-heading{align-items:start;flex-direction:column}header nav{gap:14px;flex-wrap:wrap}}
+
+.hero .paper{max-width:545px}.hero .paper a{color:#b9c9ff;font-weight:600}

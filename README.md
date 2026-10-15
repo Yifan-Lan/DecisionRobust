@@ -2,14 +2,15 @@
   <a href="https://yifan-lan.github.io/DecisionRobust/"><img src="website/favicon.svg?v=dr-c-20261013" width="88" height="88" alt="DecisionRobust logo"></a>
 </p>
 
-# DecisionRobust
+# DecisionRobust: Benchmarking Robustness for JEV Style Decision Models Across Text and Vision
 
 A benchmark for decision model reliability across text, structured inputs, and images.
 
+- **Paper:** https://arxiv.org/abs/2610.19118
 - **Website:** https://Yifan-Lan.github.io/DecisionRobust/
 - **Dataset and results:** https://huggingface.co/datasets/yflantmy/DecisionRobust
 
-The website provides a sortable leaderboard, interactive ASR ranking bars and cross-dataset line charts, model comparison, and a clean/attacked example explorer across five curated release sets. Paper and evaluation code are being prepared for release.
+The website provides a sortable leaderboard, interactive ASR ranking bars and cross-dataset line charts, model comparison, and a clean/attacked example explorer across five curated release sets. Evaluation code is being prepared for release.
 
 ## Run locally
 
@@ -30,7 +31,7 @@ In repository **Settings → Pages → Build and deployment**, select **GitHub A
 
 - `website/`: HTML, CSS, and browser JavaScript.
 - `scripts/build_site.py`: reproducible public-data exporter and validation.
-- `site_config.json`: independently pinned data and result revisions.
+- `site_config.json`: independently pinned data, result and citation revisions.
 - `.github/workflows/pages.yml`: GitHub Pages deployment.
 - `website/data/`: generated and ignored; the workflow builds it before deployment.
 
@@ -60,3 +61,19 @@ Run `python scripts/chart_smoke.py` for chart-value, rank, filtering, export, an
 ## Submit a model
 
 Open a [model submission issue](https://github.com/Yifan-Lan/DecisionRobust/issues/new?template=model_submission.yml) with paired clean/adv outputs, an exact model version and evaluation settings. See the [submission guide](docs/submissions.md) for the JSONL template, local validation, PR checks and review process. Results stay off the leaderboard until the maintainer approves their exact file hashes and merges the approval. Public submissions never require sending API credentials.
+
+## Citation
+
+If you use DecisionRobust, please cite our paper:
+
+```bibtex
+@misc{lan2026decisionrobustbenchmarkingrobustnessjev,
+      title={DecisionRobust: Benchmarking Robustness for JEV Style Decision Models Across Text and Vision},
+      author={Yifan Lan and Zhongye Liu and Yurui Chang and Hanyu Wang and Yongkang Du and Lu Lin and Jinghui Chen},
+      year={2026},
+      eprint={2610.19118},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2610.19118},
+}
+```

@@ -27,7 +27,8 @@ def main():
         url = f'https://huggingface.co/datasets/{CONFIG["dataset"]}/resolve/{revision}/{path}'
         with urllib.request.urlopen(url, timeout=120) as response:
             return response.read()
-    manifests = {rev: json.loads(read('MANIFEST.json', rev)) for rev in {CONFIG['data_revision'], CONFIG['results_revision']}}
+    citation_revision = CONFIG.get('citation_revision', CONFIG['results_revision'])
+    manifests = {rev: json.loads(read('MANIFEST.json', rev)) for rev in {CONFIG['data_revision'], CONFIG['results_revision'], citation_revision}}
     def checked(path, rev):
         data = read(path, rev)
         expected = manifests[rev]['files'][path]['sha256']
@@ -88,7 +89,7 @@ def main():
         with (out/'asr.csv').open('w',newline='') as f:
             writer=csv.DictWriter(f,fieldnames=fields);writer.writeheader()
             writer.writerows({k:cell(v) for k,v in r.items()} for r in flat)
-    (out / 'CITATION.bib').write_bytes(checked('CITATION.bib', CONFIG['results_revision']))
+    (out / 'CITATION.bib').write_bytes(checked('CITATION.bib', citation_revision))
     print(f'Built {len(index)} candidates, {len(originals)} originals, {len(models)} models. All source hashes and metric bounds verified.')
 
 if __name__ == '__main__':
