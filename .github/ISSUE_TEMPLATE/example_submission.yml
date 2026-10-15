@@ -1,0 +1,111 @@
+name: Submit an example
+description: Propose a clean–adversarial pair with successful attacks on at least two models.
+title: '[Example submission] '
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Submit one clean–adversarial pair for maintainer review. Read the [example submission guide](https://github.com/Yifan-Lan/DecisionRobust/blob/main/docs/example-submissions.md).
+        Explain why the label remains unchanged and, where applicable, why meaning is preserved and visual evidence remains readable. **External model validation is not required.**
+        Submissions and attachments are public. Do not include credentials or private data. Opening an issue does not add an example to the benchmark.
+  - type: dropdown
+    id: suite
+    attributes:
+      label: Evaluation suite
+      options:
+        - Text adversarial
+        - Text injection
+        - Image perturbation
+        - Image overlay
+        - Image instruction
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source and scenario
+      description: Give the source dataset, original ID/link and scenario. For an existing DecisionRobust original, include its release and original ID. For new or self-authored data, explain its origin and the applicable redistribution terms.
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Complete clean and adversarial inputs
+      description: Paste JSON or link downloadable files/a PR. Include full requests with all questions, and original-resolution image files where applicable. Use stable, public links; screenshots or text excerpts alone are insufficient.
+      placeholder: |
+        Clean request:
+        Adversarial request:
+        Image files (if applicable):
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: Scoring target and ground truth
+      description: Specify Choice, Noul or Score, the scored question ID(s), the GT and its supporting evidence. For grouped Noul, provide the predicate-to-class mapping. Keep unscored questions in the requests.
+    validations:
+      required: true
+  - type: textarea
+    id: attack
+    attributes:
+      label: Attack method and changes
+      description: State the method, edited fields/regions and relevant settings. For injection, give the exact payload and the wrong target chosen before evaluation. For other attacks, the target may be N/A.
+    validations:
+      required: true
+  - type: textarea
+    id: model_one
+    attributes:
+      label: Successful attack — model 1
+      description: Provide the exact model/version, evaluation date, adapter/inference settings, full clean/adv outputs or raw receipt links, and the scored answers. Both calls must succeed; clean must be correct and adv must meet the suite's attack-success rule.
+      placeholder: |
+        Model / version / public model link:
+        Date / settings / adapter:
+        Clean output and scored answer:
+        Adv output and scored answer:
+        Raw outputs / receipts:
+    validations:
+      required: true
+  - type: textarea
+    id: model_two
+    attributes:
+      label: Successful attack — model 2
+      description: Use the same candidate and scoring target on a different model. Different API keys, reruns, or quantizations of one model do not count as two models. Distinct model families are encouraged. Include versions, settings, clean/adv outputs and receipt links as above.
+    validations:
+      required: true
+  - type: textarea
+    id: label_consistency
+    attributes:
+      label: Why is the label unchanged?
+      description: Explain why the same GT is correct for both inputs. Identify the supporting evidence and explain why the edit does not create a different valid answer. Your own reasoning is sufficient for submission; external model validation is not required.
+    validations:
+      required: true
+  - type: textarea
+    id: semantic_preservation
+    attributes:
+      label: Why is the meaning preserved?
+      description: For Text adversarial, explain why task-relevant meaning is unchanged. For other suites, explain where relevant or write N/A with a short reason. Injection need not preserve the meaning of every added instruction, but must preserve the original task's GT.
+    validations:
+      required: true
+  - type: textarea
+    id: visual_readability
+    attributes:
+      label: Why is the visual evidence readable?
+      description: For image inputs, locate the evidence needed to answer and explain why it remains visible and identifiable, including after any overlay or perturbation. For text-only inputs, write N/A. External vision-model validation is not required.
+    validations:
+      required: true
+  - type: textarea
+    id: additional_evidence
+    attributes:
+      label: Additional evidence or notes (optional)
+      description: Additional models, known limitations, reproducibility details, or any reviews already available. No external-model review is required.
+  - type: checkboxes
+    id: agreement
+    attributes:
+      label: Submission checklist
+      options:
+        - label: I provide the complete clean/adv pair and at least two models' outputs for the same scoring target; both models answer clean correctly and meet the attack-success rule on adv.
+          required: true
+        - label: I have explained label consistency and the applicable semantic-preservation and visual-readability conditions, and provided data provenance and redistribution information.
+          required: true
+        - label: I understand these are submitter claims pending maintainer review; submission does not imply validation, acceptance, or a change to the published benchmark.
+          required: true

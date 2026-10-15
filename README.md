@@ -68,6 +68,12 @@ Run `python scripts/chart_smoke.py` for chart-value, rank, filtering, export, an
 
 Open a [model submission issue](https://github.com/Yifan-Lan/DecisionRobust/issues/new?template=model_submission.yml) with paired clean/adv outputs, an exact model version and evaluation settings. See the [submission guide](docs/submissions.md) for the JSONL template, local validation, PR checks and review process. Results stay off the leaderboard until the maintainer approves their exact file hashes and merges the approval. Public submissions never require sending API credentials.
 
+## Submit an example
+
+Open an [example submission issue](https://github.com/Yifan-Lan/DecisionRobust/issues/new?template=example_submission.yml) with one complete clean–adversarial pair, GT, source, attack method, and successful paired outputs from at least two models. Explain why the label stays unchanged and, where applicable, why meaning is preserved and image evidence remains readable. **External model validation is not required.**
+
+See the [example submission guide](docs/example-submissions.md) for success criteria and review details. All candidates undergo maintainer review; submissions do not automatically change the dataset or leaderboard. Accepted examples may enter a future versioned release.
+
 ## Citation
 
 If you use DecisionRobust, please cite our paper:
