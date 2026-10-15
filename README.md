@@ -12,6 +12,12 @@ A benchmark for decision model reliability across text, structured inputs, and i
 
 The website provides a sortable leaderboard, interactive ASR ranking bars and cross-dataset line charts, model comparison, and a clean/attacked example explorer across five curated release sets. Evaluation code is being prepared for release.
 
+## Benchmark overview
+
+[![DecisionRobust overview: 141 text adversarial, 374 text injection, 200 image perturbation, 223 image overlay and 120 image instruction examples. Red marks show the edited text or injected instruction.](website/assets/benchmark-overview.png)](website/assets/benchmark-overview.png)
+
+Explore paired examples and model results on the [interactive website](https://yifan-lan.github.io/DecisionRobust/#leaderboard).
+
 ## Run locally
 
 Python 3.10+ is sufficient; no frontend dependencies or API credentials are needed.
