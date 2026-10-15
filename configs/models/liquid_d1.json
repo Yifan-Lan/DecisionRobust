@@ -1,0 +1,10 @@
+{
+  "id": "liquid-d1",
+  "adapter": "native_http",
+  "model": "d1",
+  "revision": "provider-unpinned; verify access and model availability before running",
+  "endpoint": "https://api.liquid.ai/decisions/v1/systemone",
+  "api_key_env": "LIQUID_API_KEY",
+  "timeout": 120,
+  "image_transport": "unsupported"
+}

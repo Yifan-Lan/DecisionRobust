@@ -1,0 +1,9 @@
+{
+  "id": "openai-decisions-gpt-6-luna",
+  "adapter": "openai_decisions",
+  "model": "gpt-6-luna",
+  "revision": "provider-unpinned; actual returned model recorded per request",
+  "endpoint": "https://api.openai.com/v1/decisions",
+  "api_key_env": "OPENAI_API_KEY",
+  "timeout": 120
+}

@@ -1,0 +1,7 @@
+{
+  "id": "your-python-model",
+  "adapter": "python",
+  "factory": "examples.custom_adapter:YourAdapter",
+  "module_search_path": ".",
+  "revision": "replace-with-exact-checkpoint-revision"
+}

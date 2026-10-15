@@ -12,7 +12,7 @@ import re
 from pathlib import Path
 from urllib.parse import urlparse
 
-from submission_scoring import score, targeted_success
+from submission_scoring import score, targeted_success, validate_scored_answers
 
 ROOT = Path(__file__).resolve().parents[1]
 SLUG = re.compile(r'^[a-z0-9][a-z0-9_-]{1,63}$')
@@ -69,36 +69,7 @@ def validate_answers(record, side, result):
     answers = result.get('answers')
     if not isinstance(answers, dict):
         raise ValueError('answers must be a question-ID map')
-    # Unscored questions stay in the full request; only designated outputs score.
-    for qid in record['task']['question_ids']:
-        q = record[side]['questions'][qid]
-        a = answers.get(qid)
-        if not isinstance(a, dict):
-            raise ValueError('Missing scored question output: ' + qid)
-        kind = q['type']
-        if kind == 'noul':
-            value = a.get('noul')
-            if isinstance(value, bool) or not isinstance(value, (float, int)) or not math.isfinite(value) or not 0 <= value <= 1:
-                raise ValueError('Invalid Noul probability')
-        elif kind == 'score':
-            value = a.get('score')
-            if isinstance(value, bool) or not isinstance(value, (float, int)) or not math.isfinite(value) or not 0 <= value <= len(q['criteria'])-1:
-                raise ValueError('Score must be finite and within the published scale')
-        elif kind == 'choice' and a.get('choice') not in q['criteria']:
-            raise ValueError('Invalid native Choice label')
-        if 'probabilities' in a:
-            probs = a['probabilities']
-            expected = set(q['criteria']) if kind == 'choice' else {str(i) for i in range(len(q['criteria']))} if kind == 'score' else None
-            if expected is None or not isinstance(probs, dict) or set(probs) != expected:
-                raise ValueError('Probability keys do not match the question')
-            vals = list(probs.values())
-            if any(isinstance(v, bool) or not isinstance(v, (int,float)) or not math.isfinite(v) or not 0 <= v <= 1 for v in vals) or abs(sum(vals)-1) > 1e-4:
-                raise ValueError('Invalid probability distribution')
-            if kind == 'score':
-                weighted = sum(int(k)*v for k,v in probs.items())
-                if abs(weighted-a['score']) > 1e-4:
-                    raise ValueError('Score differs from probability-weighted value')
-    score(record, answers)
+    validate_scored_answers(record, side, answers)
     return True
 
 

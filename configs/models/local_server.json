@@ -1,0 +1,9 @@
+{
+  "id": "your-native-model",
+  "adapter": "native_http",
+  "model": "your-model-name",
+  "revision": "replace-with-exact-checkpoint-revision",
+  "endpoint_env": "DECISION_ENDPOINT",
+  "timeout": 120,
+  "image_transport": "unsupported"
+}

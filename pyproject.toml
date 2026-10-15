@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "decisionrobust"
+version = "0.1.0"
+description = "Evaluation tools for DecisionRobust's curated text and vision challenges"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+authors = [{name = "DecisionRobust contributors"}]
+dependencies = []
+
+[project.scripts]
+decisionrobust = "decisionrobust.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+decisionrobust = ["release.json"]

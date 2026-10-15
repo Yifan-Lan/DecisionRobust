@@ -1,0 +1,8 @@
+{
+  "id": "bosun-v3-1-1-7b",
+  "adapter": "bosun",
+  "checkpoint": "Hanno-Labs/bosun-v3.1-1.7b",
+  "revision": "1d8dc82a20e4a32ed60927a47272d6efff48eed2",
+  "device": "cuda:0",
+  "trust_remote_code": false
+}

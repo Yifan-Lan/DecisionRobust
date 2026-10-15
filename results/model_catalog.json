@@ -1,0 +1,375 @@
+[
+  {
+    "id": "jev",
+    "name": "JEV-1.13.0",
+    "checkpoint_bindings": [],
+    "standalone_adapter": "jev_sdk",
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "kev",
+    "name": "KEV-9B",
+    "checkpoint_bindings": [
+      {
+        "repository": "jaredpalmer/kev-9b",
+        "revision": "2629c06a5aeb0feb3b9783bafed17ed8f39ecf5c"
+      }
+    ],
+    "standalone_adapter": "kev",
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "autotrust",
+    "name": "AutoTrust JEV-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "autotrust/JEV-27B",
+        "revision": "924a8c7c87abb9248aff916182f179295622b911"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "openjev",
+    "name": "OpenJEV-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "openjev/openjev",
+        "revision": "ac97900fd034fdd7e7e536f3d4c21b836cae0750"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "bosun",
+    "name": "Bosun-v3.1-1.7B",
+    "checkpoint_bindings": [
+      {
+        "repository": "Hanno-Labs/bosun-v3.1-1.7b",
+        "revision": "1d8dc82a20e4a32ed60927a47272d6efff48eed2"
+      }
+    ],
+    "standalone_adapter": "bosun",
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "d1",
+    "name": "Liquid D1",
+    "checkpoint_bindings": [],
+    "standalone_adapter": "native_http",
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "vega",
+    "name": "Decision-2.0-Vega-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "vllm-sr/Decision-2.0-Vega-27B",
+        "revision": "7aec49ae11a18741706da549ab626b9052795fe7"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "neohorse",
+    "name": "NeoHorse-Jev-4B",
+    "checkpoint_bindings": [
+      {
+        "repository": "TokenRhythm/NeoHorse-Jev-4B",
+        "revision": "434cb21d3a994a953d3ae5788405fcb2c4970554"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "gev",
+    "name": "GEV-26B-Decide",
+    "checkpoint_bindings": [
+      {
+        "repository": "autotrust/GEV-26B-Decide",
+        "revision": "7c89590ead085bf77630b4bf68264ea30b6ddc78"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "mica",
+    "name": "Mica-v0.1-4B",
+    "checkpoint_bindings": [
+      {
+        "repository": "sky7350/Mica-v0.1-4B",
+        "revision": "9b6428b272f4708ef54a4702b52bb453a4059363"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "imajev",
+    "name": "Imajev-4B",
+    "checkpoint_bindings": [
+      {
+        "repository": "mohit67890/imajev-4b",
+        "revision": "f8d8234cebc6c99065c07731e59716dc0a6e27ab"
+      },
+      {
+        "repository": "Qwen/Qwen3.5-4B",
+        "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "onejev",
+    "name": "OneJev-4B",
+    "checkpoint_bindings": [
+      {
+        "repository": "OmniJev/OneJev-4B",
+        "revision": "c88e18653ceb7a8770716287f55fdefc79d6b588"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "visual",
+    "name": "Visual-Jev-4B",
+    "checkpoint_bindings": [
+      {
+        "repository": "guanxuyu/visual-jev-4b-answer-sft",
+        "revision": "7a3f1bb0d8f7bfbbd8514d968ab7de3518849c8d"
+      },
+      {
+        "repository": "Qwen/Qwen3-VL-4B-Instruct",
+        "revision": "ebb281ec70b05090aa6165b016eac8ec08e71b17"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "omni",
+    "name": "Jev-Omni",
+    "checkpoint_bindings": [
+      {
+        "repository": "akhilaaa3/Jev-Omni",
+        "revision": "5addda86ddee081a68fb067477ea100c221b8917"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "standardone",
+    "name": "StandardOne-8B",
+    "checkpoint_bindings": [
+      {
+        "repository": "StandardThinking/StandardOne-8B",
+        "revision": "ac495d1c221297f0ae951941eff27bcf58b5ce52"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "strands",
+    "name": "Strands Decider-2B v19",
+    "checkpoint_bindings": [
+      {
+        "repository": "StrandsAgents/strands-decider-2B-hobson-v19",
+        "revision": "bb282d786bc251fd4e3068de3ada9ddbb38127cd"
+      },
+      {
+        "repository": "Qwen/Qwen3.5-2B-Base",
+        "revision": "b1485b2fa6dfa1287294f269f5fb618e03d52d7c"
+      },
+      {
+        "repository": "https://github.com/strands-labs/strands-decider",
+        "revision": "75c9fd32e664954cdc18481434018aa507eee8fb"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "kev27",
+    "name": "KEV-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "jaredpalmer/kev-27b",
+        "revision": "af0e6d551bdc2cc724f3e9d7a8bee1cd4fb8f7bf"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "onejev9",
+    "name": "OneJev-9B",
+    "checkpoint_bindings": [
+      {
+        "repository": "OmniJev/OneJev-9B",
+        "revision": "59429e80aa6cbb82c49d4ff8802359044a084eee"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "onejev27",
+    "name": "OneJev-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "OmniJev/OneJev-27B",
+        "revision": "aec969d68e7e8e8b0df051e065c04304c0cd7163"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "imajev9",
+    "name": "Imajev-9B",
+    "checkpoint_bindings": [
+      {
+        "repository": "mohit67890/imajev-9b",
+        "revision": "9a69dd0f0d99d465638a9f872ef29ce37c21e888"
+      },
+      {
+        "repository": "Qwen/Qwen3.5-9B",
+        "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "lux9",
+    "name": "Decision-2.0-Lux-9B",
+    "checkpoint_bindings": [
+      {
+        "repository": "vllm-sr/Decision-2.0-Lux-9B",
+        "revision": "78bf3c03d9147aeb30b641edfe0e30ed04887ca5"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "standardone3",
+    "name": "StandardOne-3B",
+    "checkpoint_bindings": [
+      {
+        "repository": "StandardThinking/StandardOne-3B",
+        "revision": "70023495760b0cefecda7395377377f4d85a64fb"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "openai",
+    "name": "OpenAI Decisions / gpt-6-luna",
+    "checkpoint_bindings": [],
+    "standalone_adapter": "openai_decisions",
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "h2o",
+    "name": "H2O-Lightning-4B",
+    "checkpoint_bindings": [
+      {
+        "repository": "h2oai/h2o-lightning-4b",
+        "revision": "fa796847b53ad69804cd1fb1df40e3c9f10b1783"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "liquid3",
+    "name": "Liquid d1-3B",
+    "checkpoint_bindings": [
+      {
+        "repository": "LiquidAI/d1-3B",
+        "revision": "051bcc464b01b9f92942b364d9586b0ef5912432"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "pplx",
+    "name": "Perplexity Decider v1.1-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "perplexity-ai/pplx-decider-v1.1-27b",
+        "revision": "6195aa55a72ae21e503c8a60198f7b390d42adb5"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "inner27",
+    "name": "InnerJev-27B-Full",
+    "checkpoint_bindings": [
+      {
+        "repository": "jylin001206/InnerJev-27B-Full",
+        "revision": "3f229c41d97e68c792aa0ebfce35e047db3a823e"
+      },
+      {
+        "repository": "https://github.com/amazingljy1206/InnerJev.git",
+        "revision": "03470fbab08f7432d78911a5bb56fc5f10b925d9"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "gliner",
+    "name": "GLiNER2.5-Decide-340M",
+    "checkpoint_bindings": [
+      {
+        "repository": "fastino/GLiNER2.5-Decide",
+        "revision": "9d1bfb848cd16d93ee56ccbc59cd92bf0f284d90"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "clm",
+    "name": "CLM-v0.1-8B",
+    "checkpoint_bindings": [
+      {
+        "repository": "Contrastive-LM/CLM-v0.1-8B",
+        "revision": "e939398d4556fcd9400c76fa8c5a513202f42b0a"
+      },
+      {
+        "repository": "Qwen/Qwen3-8B",
+        "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "laya_multi",
+    "name": "Laya Multilingual-322M",
+    "checkpoint_bindings": [
+      {
+        "repository": "convaiinnovations/laya-multilingual",
+        "revision": "1720e3e3357cfe1e281542e223f8273b0890ca34"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  }
+]

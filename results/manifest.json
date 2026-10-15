@@ -1,0 +1,18 @@
+{
+  "release": {
+    "dataset": "yflantmy/DecisionRobust",
+    "data_revision": "8b6bac5de7ed66842b6c0c86c87f0944f6cf83b6",
+    "results_revision": "2bd4c636148e321616a6479391cc8ac7a4c9c8fd",
+    "version": "1.2.0",
+    "citation_revision": "f35c4f5aedcd7c10b33ad978142bd60d7bf68a3a"
+  },
+  "files": {
+    "model_catalog.json": {
+      "sha256": "9f5150e35b23919c61fb208e8d3ffb0cab2403f9e5fc34e2bc7b4e1f06e1fa4d"
+    },
+    "published_asr.json": {
+      "sha256": "3d17fa5bca3ae1bb83f5f1aeafbc91f087cd94afdbae472ea7851f502e520d9c"
+    }
+  },
+  "provenance": "published_asr.json is the pinned public aggregate; model_catalog.json is a restricted-field derivative of public model_details.json. It does not imply all historical runtimes are bundled."
+}

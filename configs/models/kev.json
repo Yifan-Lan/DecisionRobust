@@ -1,0 +1,8 @@
+{
+  "id": "kev-9b",
+  "adapter": "kev",
+  "checkpoint": "checkpoints/kev-9b",
+  "revision": "2629c06a5aeb0feb3b9783bafed17ed8f39ecf5c",
+  "device": "cuda:0",
+  "max_tokens": 8192
+}

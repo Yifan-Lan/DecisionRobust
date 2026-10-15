@@ -1,0 +1,8 @@
+{
+  "id": "jev-1-13-0",
+  "adapter": "jev_sdk",
+  "model": "jev-1.13.0",
+  "revision": "provider-unpinned; verify version availability before running",
+  "api_key_env": "JEV_API_KEY",
+  "timeout": 120
+}

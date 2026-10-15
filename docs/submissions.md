@@ -6,7 +6,7 @@ Community results are welcome. Submissions are public and remain off the leaderb
 
 Use the pinned public release in `site_config.json`. You may submit any supported subset of the five suites. Preserve complete clean and adversarial inputs, including questions without ground truth. Score only `task.question_ids`. Disclose any necessary adapter or image transformation, model/checkpoint version, quantization, inference settings, and whether this benchmark was used for training, tuning, prompt selection, or checkpoint selection.
 
-Clone this repository, then create the result skeleton (Python 3.12+, standard library only):
+Clone this repository, then create the result skeleton (Python 3.10+, standard library only):
 
 ```bash
 python scripts/build_site.py
@@ -16,6 +16,8 @@ python scripts/prepare_submission.py your-model-version --configs text_adversari
 This creates `submissions/entries/your-model-version/manifest.json` and `predictions.jsonl`. Fill in the manifest, including a public model link and a versioned evaluation-code URL. Use a unique model ID; community submissions cannot overwrite existing model IDs.
 
 Run your model on every clean/adv request in your chosen suites. The request files are in the public dataset; `website/data/samples/<id>.json` also preserves their native JSON. Image paths resolve relative to `raw/<config>/` in the pinned dataset, not relative to the submission folder. Retain all questions when evaluating, even though only designated questions are scored.
+
+If you use the included evaluation CLI, run a complete evaluation of your claimed suites and copy its `predictions.jsonl` into the generated submission directory. A `--limit` smoke run does not satisfy the full-suite submission requirement. Fill in the generated model/evaluator metadata and disclosures yourself; the evaluation CLI does not create an approval or a complete submission manifest.
 
 ## 2. Record outputs
 

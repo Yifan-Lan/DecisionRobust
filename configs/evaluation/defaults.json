@@ -1,0 +1,10 @@
+{
+  "note": "Documented CLI defaults; this file is not an extra configuration layer.",
+  "workers": 1,
+  "requests_per_second": 1.0,
+  "attempts": 3,
+  "retry_failed": false,
+  "cache_complete_requests": true,
+  "truncate_inputs": false,
+  "score_only_task_question_ids": true
+}
