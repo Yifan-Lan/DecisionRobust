@@ -16,6 +16,10 @@ This repository provides the evaluation tools for **DecisionRobust**: load the c
 
 The public release contains **1,058 curated attack examples from 441 distinct original questions** across five suites. Data and images are hosted on Hugging Face; model weights are not included in this repository.
 
+**Attack Success Rate (ASR)** measures how often an attack succeeds on examples the model answers correctly before the attack. For text adversarial and image perturbation, success means producing an incorrect answer (Flip ASR). For prompt injection, it additionally requires matching the attacker’s specified target (Target ASR). Lower is better.
+
+We count attack candidates, not unique original questions, and exclude pairs with invalid or unavailable outputs. Interpret ASR alongside clean accuracy and coverage.
+
 | Suite | What changes | Examples | Primary metric |
 |---|---|---:|---|
 | `text_adversarial_curated` | Meaning-preserving edits to text or structured inputs | 141 | Flip ASR |
