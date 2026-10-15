@@ -67,7 +67,7 @@ Open a [model submission issue](https://github.com/Yifan-Lan/DecisionRobust/issu
 If you use DecisionRobust, please cite our paper:
 
 ```bibtex
-@misc{lan2026decisionrobustbenchmarkingrobustnessjev,
+@misc{lan2026decisionrobust,
       title={DecisionRobust: Benchmarking Robustness for JEV Style Decision Models Across Text and Vision},
       author={Yifan Lan and Zhongye Liu and Yurui Chang and Hanyu Wang and Yongkang Du and Lu Lin and Jinghui Chen},
       year={2026},
