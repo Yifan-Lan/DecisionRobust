@@ -3,7 +3,7 @@
   "release": {
     "version": "1.2.0",
     "data_revision": "8b6bac5de7ed66842b6c0c86c87f0944f6cf83b6",
-    "results_revision": "2bd4c636148e321616a6479391cc8ac7a4c9c8fd"
+    "results_revision": "92edfdde89b3175c1c26c97e43ab2edf5d906002"
   },
   "model": {
     "id": "your-model-version",
@@ -17,5 +17,7 @@
   "submitter": "",
   "evaluation_code_url": "",
   "complete_requests_preserved": false,
-  "configs": ["text_adversarial_curated"]
+  "configs": [
+    "text_adversarial_curated"
+  ]
 }

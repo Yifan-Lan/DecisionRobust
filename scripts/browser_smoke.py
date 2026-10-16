@@ -14,12 +14,14 @@ async def main():
   page.on('pageerror',lambda err: errors.append(str(err)))
   await page.goto(BASE_URL,wait_until='networkidle')
   await page.wait_for_selector('.ground-truth')
-  assert await page.locator('#results-table tbody tr').count()==30
+  models=await page.evaluate('data.models')
+  assert await page.locator('#results-table tbody tr').count()==len(models)
+  assert await page.locator('#updates').is_visible()
   await page.screenshot(path=f'{SCREENSHOTS}/desktop.png',full_page=True)
   await page.locator('[data-suite="text_adversarial_curated"]').click()
   assert await page.locator('#results-table thead th').count()==5
   await page.locator('#model-search').fill('KEV')
-  assert await page.locator('#results-table tbody tr').count()==2
+  assert await page.locator('#results-table tbody tr').count()==sum('kev' in name.lower() for name in models.values())
   await page.locator('#model-search').fill('')
   await page.locator('input[data-model="jev"]').check()
   await page.locator('#selected-only').check()
@@ -56,6 +58,6 @@ async def main():
   assert await page.evaluate('document.documentElement.scrollWidth<=window.innerWidth')
   await page.screenshot(path=f'{SCREENSHOTS}/mobile.png',full_page=True)
   assert not errors,errors
-  print(json.dumps({'models':30,'suite_scenarios_tested':visited,'image_load_and_modal':'passed','share_url_reload':'passed','mobile_overflow':False,'javascript_errors':errors}))
+  print(json.dumps({'configurations':len(models),'suite_scenarios_tested':visited,'image_load_and_modal':'passed','share_url_reload':'passed','mobile_overflow':False,'javascript_errors':errors}))
   await browser.close()
 asyncio.run(main())

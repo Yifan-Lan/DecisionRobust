@@ -2,16 +2,16 @@
   "release": {
     "dataset": "yflantmy/DecisionRobust",
     "data_revision": "8b6bac5de7ed66842b6c0c86c87f0944f6cf83b6",
-    "results_revision": "2bd4c636148e321616a6479391cc8ac7a4c9c8fd",
+    "results_revision": "92edfdde89b3175c1c26c97e43ab2edf5d906002",
     "version": "1.2.0",
     "citation_revision": "f35c4f5aedcd7c10b33ad978142bd60d7bf68a3a"
   },
   "files": {
     "model_catalog.json": {
-      "sha256": "9f5150e35b23919c61fb208e8d3ffb0cab2403f9e5fc34e2bc7b4e1f06e1fa4d"
+      "sha256": "a86e4d33e77b97a8e5e15c5100c9fe1fc54a7936ef1d3e0228edc57f02bff33d"
     },
     "published_asr.json": {
-      "sha256": "3d17fa5bca3ae1bb83f5f1aeafbc91f087cd94afdbae472ea7851f502e520d9c"
+      "sha256": "a1cd5d0e48b2b18b73e4d4307b142e7bad30ee9bad7c40ec7491ad2bfa86d059"
     }
   },
   "provenance": "published_asr.json is the pinned public aggregate; model_catalog.json is a restricted-field derivative of public model_details.json. It does not imply all historical runtimes are bundled."

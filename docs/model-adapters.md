@@ -23,7 +23,7 @@ Native Choice remains authoritative even if it differs from probability argmax. 
 
 ## Historical model coverage versus portable code
 
-`results/model_catalog.json` lists 30 published model configurations and the available public checkpoint bindings. `null` in `standalone_adapter` means that this repository does **not** yet contain a standalone loader for that model. The native server/custom adapter interfaces can connect a user-supplied runtime, but do not reproduce its prompt or readout automatically.
+`results/model_catalog.json` lists 56 published model/version/configuration entries and the available public checkpoint bindings. `null` in `standalone_adapter` means that this repository does **not** yet contain a standalone loader for that model. The native server/custom adapter interfaces can connect a user-supplied runtime, but do not reproduce its prompt or readout automatically.
 
 AutoTrust, OpenJEV, the other vision runtimes, and the remaining specialist model loaders are still undergoing extraction from experiment-specific environments. They are not bundled as unreviewed vendor trees. Complete published adapter policies and historical bindings remain available in the pinned HF `results/model_details.json`. Missing pins or adapter differences must not be filled in with guesses.
 

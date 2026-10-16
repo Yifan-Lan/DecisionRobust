@@ -27,3 +27,14 @@
 .hero-links{position:relative;z-index:1}.hero .paper-cta{gap:10px;background:#ff8373;border-color:#ff978a;color:#142035;font-size:14px;font-weight:700}.hero .paper-cta:hover{background:#ffa294;border-color:#ffb0a5;text-decoration:none}.paper-cta svg{flex:none}.paper-feature{position:relative;z-index:1;display:block;max-width:760px;margin:18px 0 28px;color:#b3bfd2}.paper-feature-title{font-size:15px;font-weight:400;line-height:1.6}.paper-feature:hover{color:#d9e2f1;text-decoration:underline;text-underline-offset:3px}@media(max-width:650px){.paper-feature{margin:16px 0 24px}.paper-feature-title{font-size:14px;line-height:1.55}.hero .paper-cta{font-size:13px}}
 
 .example-submission{margin-top:46px;padding-top:40px;border-top:1px solid var(--line);scroll-margin-top:24px}.example-submission h2{font-size:28px;letter-spacing:-.8px}.example-submission .section-heading>div{min-width:0}.example-submission .primary{flex-shrink:0}@media(max-width:850px){.example-submission h2{font-size:25px}}
+
+/* Dated result updates and explicit model configuration provenance. */
+.updates-section{border-top:1px solid var(--line,#d9dfeb);padding-top:36px;margin-bottom:48px}
+.update-entry{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;border-top:1px solid var(--line,#d9dfeb);padding:22px 0}
+.update-entry time{font:600 12px/1.6 monospace;letter-spacing:.05em;color:var(--muted,#718097)}
+.update-entry h3{margin:0 0 9px;font-size:19px}.update-entry p{margin:0 0 10px;max-width:900px}.update-entry.compact p{margin:0}
+.configuration-guide{font-size:14px;line-height:1.7;max-width:1000px;color:var(--muted,#718097)}
+.configuration-meta{display:block;max-width:300px;white-space:normal;font-size:11px;line-height:1.5;margin-top:6px}
+.model-details{font-size:12px;max-width:310px;margin:8px 0}.model-details summary{cursor:pointer;color:var(--accent,#4569dc);font-size:11px}
+.model-details pre{font-size:10px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;padding:10px}
+@media(max-width:640px){.update-entry{grid-template-columns:1fr;gap:8px}.updates-section{padding-top:25px}.update-entry h3{font-size:17px}}

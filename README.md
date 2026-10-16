@@ -12,6 +12,13 @@ A benchmark for decision model reliability across text, structured inputs, and i
 
 This repository provides the evaluation tools for **DecisionRobust**: load the curated benchmark, run paired clean/adversarial evaluations, compute native decision metrics, and contribute model results or new examples. It also contains the interactive leaderboard website.
 
+## Updates
+
+- **2026-10-16:** Added 26 model/configuration entries and JEV-1.13 image coverage. The leaderboard now includes **56 text / 34 image configurations**, with explicit model sizes, API versions and StartLux inference modes. [Results and settings](docs/model-update-20261016.md).
+- **2026-10-14:** [DecisionRobust is available on arXiv](https://arxiv.org/abs/2610.19118).
+
+[Full update history](https://huggingface.co/datasets/yflantmy/DecisionRobust/blob/main/CHANGELOG.md). New evaluations use the same v1.2.0 benchmark examples.
+
 ## Benchmark
 
 The public release contains **1,058 curated attack examples from 441 distinct original questions** across five suites. Data and images are hosted on Hugging Face; model weights are not included in this repository.
@@ -143,14 +150,14 @@ src/decisionrobust/
 configs/            Model configurations and documented evaluation defaults
 examples/           Offline demo and custom-adapter example
 tests/              Offline evaluation and transport checks
-results/            Published aggregates and 30-model checkpoint catalog
+results/            Published aggregates and model/configuration catalog
 scripts/            Submission validation, website build and release checks
 docs/               Usage, protocol, model, contribution and website guides
 submissions/        Community model submission templates and approval registry
 website/            Interactive leaderboard and example explorer
 ```
 
-The current code release includes the evaluation pipeline and the integrations listed above. **It does not yet bundle all 30 historical model runtimes or the attack-generation pipeline.** GPU loading and paid API inference were not rerun when assembling this portable release; offline tests validate the software contracts. See [model adapter scope](docs/model-adapters.md) and [data construction scope](docs/data-construction.md).
+The current code release includes the evaluation pipeline and the integrations listed above. **It does not bundle every evaluated model runtime or the attack-generation pipeline.** GPU loading and paid API inference were not rerun when assembling this portable release; offline tests validate the software contracts. See [model adapter scope](docs/model-adapters.md) and [data construction scope](docs/data-construction.md).
 
 ## Tests
 

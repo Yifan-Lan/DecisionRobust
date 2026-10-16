@@ -56,10 +56,10 @@
   },
   {
     "id": "d1",
-    "name": "Liquid D1",
+    "name": "Liquid d1:free (historical)",
     "checkpoint_bindings": [],
     "standalone_adapter": "native_http",
-    "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+    "note": "Historical results and selection flags retained. The 2026-10-16 d1 API is evaluated separately; no provider weight revision is claimed."
   },
   {
     "id": "vega",
@@ -371,5 +371,365 @@
     ],
     "standalone_adapter": null,
     "note": "No checkpoint pin is invented when absent. Other historical runtimes are not bundled; consult pinned public model_details.json."
+  },
+  {
+    "id": "jev_114",
+    "name": "JEV-1.14.0",
+    "parameter_size": "Not disclosed",
+    "configuration_group": "jev_114",
+    "configuration_label": "API · jev-1.14.0 · 2026-10-16",
+    "checkpoint_bindings": [],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "liquid_d1",
+    "name": "Liquid d1 (API, 2026-10-16)",
+    "parameter_size": "Not disclosed",
+    "configuration_group": "liquid_d1",
+    "configuration_label": "API · d1 · 2026-10-16 (separate from historical d1:free)",
+    "checkpoint_bindings": [],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "liquid_d1_ultra",
+    "name": "Liquid d1-ultra (API)",
+    "parameter_size": "Not disclosed",
+    "configuration_group": "liquid_d1_ultra",
+    "configuration_label": "API · d1-ultra · 2026-10-16",
+    "checkpoint_bindings": [],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "startlux_never",
+    "name": "StartLux AutoThink-27B · never",
+    "parameter_size": "27B",
+    "configuration_group": "startlux_autothink_27b",
+    "configuration_label": "API · think_mode=never · gate=0.6 · budget=4096 · mix=0.75",
+    "checkpoint_bindings": [],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "startlux_auto",
+    "name": "StartLux AutoThink-27B · auto (gate=0.6)",
+    "parameter_size": "27B",
+    "configuration_group": "startlux_autothink_27b",
+    "configuration_label": "API · think_mode=auto · gate=0.6 · budget=4096 · mix=0.75",
+    "checkpoint_bindings": [],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "startlux_always",
+    "name": "StartLux AutoThink-27B · always",
+    "parameter_size": "27B",
+    "configuration_group": "startlux_autothink_27b",
+    "configuration_label": "API · think_mode=always · gate=0.6 · budget=4096 · mix=0.75",
+    "checkpoint_bindings": [],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "d3",
+    "name": "d3-27B",
+    "parameter_size": "27B",
+    "configuration_group": "d3",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "vllm-sr/d3",
+        "revision": "225be8b1e2270becab69c5fe05b26f99cbbdd66b"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "d3_flash",
+    "name": "d3-flash-9B",
+    "parameter_size": "9B",
+    "configuration_group": "d3_flash",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "vllm-sr/d3-flash",
+        "revision": "8b35c853b90e777595ec36bacae820fe08ea077a"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "d3_mini",
+    "name": "d3-mini-4B",
+    "parameter_size": "4B",
+    "configuration_group": "d3_mini",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "vllm-sr/d3-mini",
+        "revision": "97dd054df4b3e0b3beb6af23ab8c82b7c0052e0e"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "d3_nano",
+    "name": "d3-nano-2B",
+    "parameter_size": "2B",
+    "configuration_group": "d3_nano",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "vllm-sr/d3-nano",
+        "revision": "aeb70d4dd53ed25b855c3b0a66394b8fe265db7f"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "intern_decision_4b",
+    "name": "Intern-Decision-4B",
+    "parameter_size": "4B",
+    "configuration_group": "intern_decision_4b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "internlm/Intern-Decision-4B",
+        "revision": "1e65a988dacbcf00b84aee7366f9e47563407000"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "intern_2b",
+    "name": "Intern-Decision-2B",
+    "parameter_size": "2B",
+    "configuration_group": "intern_2b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "internlm/Intern-Decision-2B",
+        "revision": "8797836c65fc91a2435b1fb6850b5f0aabd75cc3"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "intern_08b",
+    "name": "Intern-Decision-0.8B",
+    "parameter_size": "0.8B",
+    "configuration_group": "intern_08b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "internlm/Intern-Decision-0.8B",
+        "revision": "85a0cc5a99d67ea8d56dfe98115689212867171d"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "aplomb_1",
+    "name": "Aplomb-1-5.3B",
+    "parameter_size": "5.3B",
+    "configuration_group": "aplomb_1",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "empiriolabsai/aplomb-1",
+        "revision": "60b3a1c67d6fee193d1543b6530b4cc9c57c7fae"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "liquid_omni_600m",
+    "name": "Liquid d1-omni-600M",
+    "parameter_size": "600M",
+    "configuration_group": "liquid_omni_600m",
+    "configuration_label": "FP32 · native text and image token limits · partial coverage",
+    "checkpoint_bindings": [
+      {
+        "repository": "LiquidAI/d1-omni-600M",
+        "revision": "02b55d7076f15129e59ab3f94783f32c4b088674"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "mapika_vision_2b",
+    "name": "Mapika decider-2B-vision",
+    "parameter_size": "2B",
+    "configuration_group": "mapika_vision_2b",
+    "configuration_label": "BF16 · native 10-option limit · partial text coverage",
+    "checkpoint_bindings": [
+      {
+        "repository": "Mapika/decider-2b-vision",
+        "revision": "863e290863655f1d6b69324d77d09ac972d21609"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "gliner_1b",
+    "name": "GLiNER2.5-Decide-1B",
+    "parameter_size": "1B",
+    "configuration_group": "gliner_1b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "fastino/GLiNER2.5-Decide-1B",
+        "revision": "67af949e17bebd20f05fe020a971079889e7a462"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "h2o_nemotron_4b",
+    "name": "H2O-Lightning-4B-Nemotron-Nano",
+    "parameter_size": "4B",
+    "configuration_group": "h2o_nemotron_4b",
+    "configuration_label": "BF16 · Nemotron backbone (separate from H2O-Lightning-4B)",
+    "checkpoint_bindings": [
+      {
+        "repository": "h2oai/h2o-lightning-4b-nemotron-nano",
+        "revision": "4a8edd67c7b7ed99ae3da532bf5f2f63e54a7edd"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "inner_4b",
+    "name": "SII-Decision-4B-Full (InnerJev alias)",
+    "parameter_size": "4B",
+    "configuration_group": "inner_4b",
+    "configuration_label": "BF16 · SII-Decision-4B-Full (requested InnerJev repository alias)",
+    "checkpoint_bindings": [
+      {
+        "repository": "jylin001206/InnerJev-4B-Full",
+        "revision": "2bc089149f2b6ee3e0dc7723283f3e54fb6366ae"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "jevk5",
+    "name": "JevK5-4B",
+    "parameter_size": "4B",
+    "configuration_group": "jevk5",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "alibiserikbay/JevK5",
+        "revision": "c4f7fdb3aeab5582336406e78d3bef11bf98833d"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "kev_08b",
+    "name": "KEV-0.8B",
+    "parameter_size": "0.8B",
+    "configuration_group": "kev_08b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "jaredpalmer/kev-0.8b",
+        "revision": "bf75a6a8848ea6960ff2ed108d9ed44c2941174f"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "kev_4b",
+    "name": "KEV-4B",
+    "parameter_size": "4B",
+    "configuration_group": "kev_4b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "jaredpalmer/kev-4b",
+        "revision": "6cfce5c2fa4b4bd64026336ab649c5ca78857d52"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "mapika_35b",
+    "name": "Mapika decider-35B-A3B",
+    "parameter_size": "35B total / 3B active",
+    "configuration_group": "mapika_35b",
+    "configuration_label": "BF16 · MoE, 35B total / 3B active · native calibration",
+    "checkpoint_bindings": [
+      {
+        "repository": "Mapika/decider-35b-a3b",
+        "revision": "91470e65478656eb68fde8c0ccdfe575d69d0309"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "mapika_4b",
+    "name": "Mapika decider-4B",
+    "parameter_size": "4B",
+    "configuration_group": "mapika_4b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "Mapika/decider-4b",
+        "revision": "99d7fd5bfcc4d11ba37239dafe0ed653803819d3"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "nimble_9b",
+    "name": "Bespoke-Nimble-9B-v3",
+    "parameter_size": "9B",
+    "configuration_group": "nimble_9b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "bespokelabs/Bespoke-Nimble-9B-v3",
+        "revision": "8e927b9b4afdbb14479fac10a7364d1a695be208"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "plumb_4b",
+    "name": "Plumb-4B",
+    "parameter_size": "4B",
+    "configuration_group": "plumb_4b",
+    "configuration_label": "Native calibrated inference · 2026-10-16",
+    "checkpoint_bindings": [
+      {
+        "repository": "crh225/plumb-4b",
+        "revision": "24f7bf77e7ee258a2d158c61ea2dce2b60321010"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
   }
 ]

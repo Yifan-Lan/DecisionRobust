@@ -12,7 +12,8 @@ async def main():
   errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   await page.goto(BASE,wait_until='networkidle');await page.wait_for_selector('.ground-truth')
   assert await page.locator('#chart-limit').input_value()=='all'
-  assert await page.locator('.chart-mark').count()==30
+  initial=await page.evaluate('data.results[document.getElementById("chart-suite").value]')
+  assert await page.locator('.chart-mark').count()==sum(r['denominator']>0 for r in initial)
   metrics=await page.evaluate('data.results')
   async def verify_values():
    marks=await page.locator('.chart-mark').evaluate_all('(els)=>els.map(e=>({...e.dataset}))')
@@ -41,10 +42,10 @@ async def main():
    await page.check('#chart-complete');n=await verify_values()
    assert n==sum(r['denominator']>0 and r['valid_pairs']==r['candidates'] for r in metrics[c])
    await page.uncheck('#chart-complete')
-  # Line charts preserve gaps: JEV and Liquid API are text-only in these published results.
+  # Line charts preserve gaps for historical text-only d1; JEV now includes vision coverage.
   await page.check('input[data-model="jev"]');await page.check('input[data-model="d1"]');await page.check('input[data-model="pplx"]')
   await page.click('[data-chart="lines"]');await verify_values()
-  assert await page.locator('.chart-mark[data-model="jev"]').count()==2
+  assert await page.locator('.chart-mark[data-model="jev"]').count()==5
   assert await page.locator('.chart-mark[data-model="d1"]').count()==2
   assert await page.locator('.chart-mark[data-model="pplx"]').count()==5
   await page.locator('.chart-card').screenshot(path=str(OUT/'lines.png'))
@@ -53,7 +54,7 @@ async def main():
   url=page.url;await page.reload(wait_until='networkidle');await page.wait_for_selector('.chart-mark')
   assert await page.locator('[data-chart="lines"]').get_attribute('aria-pressed')=='true'
   assert await page.locator('#chart-measure').input_value()=='rank'
-  assert await page.locator('.chart-mark').count()==9
+  assert await page.locator('.chart-mark').count()==12
   # Empty state must not invent zero-valued results.
   await page.fill('#model-search','nothingmatches_this');assert await page.locator('.chart-mark').count()==0
   assert await page.locator('#download-chart').is_disabled()

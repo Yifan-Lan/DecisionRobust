@@ -44,17 +44,22 @@ function renderChart(){
  document.querySelectorAll('[data-chart]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.chart===chartMode)));
  DecisionCharts.render({data,config:$('chart-suite').value,mode:chartMode,measure:$('chart-measure').value,limit:$('chart-limit').value,complete:$('chart-complete').checked,selected,search:$('model-search').value,onlySelected:$('selected-only').checked});
 }
+function modelDetails(id){
+ const d=data.model_details[id]||{};
+ const subtitle=[d.parameter_size?`Size: ${d.parameter_size}`:'',d.configuration_label||''].filter(Boolean).join(' · ');
+ return `${subtitle?`<small class="configuration-meta">${esc(subtitle)}</small>`:''}<details class="model-details"><summary>Settings &amp; revision</summary><pre>${esc(JSON.stringify(d,null,2))}</pre></details>`;
+}
 function renderTable(){
  let rows=Object.entries(data.models).filter(([id,name])=>name.toLowerCase().includes($('model-search').value.toLowerCase())&&(!$('selected-only').checked||selected.has(id)));
  const value=([id,name])=>{if(sortKey==='name')return name; const r=metric(id,suite==='overview'?sortKey:suite); return r? (suite==='overview'?r.asr:sortKey==='coverage'?r.valid_pairs/r.candidates:r[sortKey]):null;};
  rows.sort((a,b)=>{const av=value(a),bv=value(b);if(av==null)return bv==null?0:1;if(bv==null)return -1;return(typeof av==='string'?av.localeCompare(bv):av-bv)*(ascending?1:-1);});
  const cols=suite==='overview'?Object.entries(data.suites).map(([id,[name]])=>[id,`${name} · ${asrName(id)}`]):[['asr',`${asrName(suite)} ↓`],['clean_accuracy_on_valid_pairs','Clean accuracy'],['adv_accuracy_on_valid_pairs','Adv. accuracy'],['coverage','Valid coverage']];
  const header=([key,name])=>`<th scope="col" aria-sort="${sortKey===key?(ascending?'ascending':'descending'):'none'}"><button data-sort="${key}">${esc(name)}${sortKey===key?(ascending?' ↑':' ↓'):''}</button></th>`;
- $('results-table').tHead.innerHTML='<tr>'+header(['name','Model'])+cols.map(header).join('')+'</tr>';
- $('results-table').tBodies[0].innerHTML=rows.map(([id,name])=>{const first=`<td><label style="font:inherit;letter-spacing:0"><input type="checkbox" data-model="${esc(id)}" ${selected.has(id)?'checked':''} aria-label="Compare ${esc(name)}">${esc(name)}</label><small class="result-origin">${data.model_details[id]?.result_source==='community_reviewed'?'Community · reviewed':'Maintainer-evaluated'}</small></td>`;
+ $('results-table').tHead.innerHTML='<tr>'+header(['name','Model / setting'])+cols.map(header).join('')+'</tr>';
+ $('results-table').tBodies[0].innerHTML=rows.map(([id,name])=>{const first=`<td><label style="font:inherit;letter-spacing:0"><input type="checkbox" data-model="${esc(id)}" ${selected.has(id)?'checked':''} aria-label="Compare ${esc(name)}">${esc(name)}</label>${modelDetails(id)}<small class="result-origin">${data.model_details[id]?.result_source==='community_reviewed'?'Community · reviewed':'Maintainer-evaluated'}</small></td>`;
  if(suite==='overview') return '<tr>'+first+cols.map(([c])=>asrCell(metric(id,c))).join('')+'</tr>';
  const r=metric(id,suite);return '<tr>'+first+asrCell(r)+`<td>${pct(r?.clean_accuracy_on_valid_pairs)}</td><td>${pct(r?.adv_accuracy_on_valid_pairs)}</td><td>${r?`${r.valid_pairs} / ${r.candidates}<small>${r.excluded_pairs} excluded</small>`:'—'}</td></tr>`;}).join('') || '<tr><td colspan="6">No matching models. Clear search or selection filters.</td></tr>';
- $('result-count').textContent=`${rows.length} models · ${selected.size} selected`;
+ $('result-count').textContent=`${rows.length} configurations · ${selected.size} selected`;
  $('table-help').textContent=suite==='overview'?'Injection suites use Target ASR; text adversarial and image perturbation use Flip ASR. Click a column to sort. No pooled rank across suites.':`${asrName(suite)}. ${data.suites[suite][1]} ${data.info.collections[suite].candidates} candidates; ${data.info.collections[suite].original_questions} original questions. Accuracy uses valid candidate pairs.`;
  renderChart();
 }
@@ -106,8 +111,9 @@ async function showSample(){
 }
 async function main(){
  [data,index]=await Promise.all([fetchJSON('data/leaderboard.json'),fetchJSON('data/index.json')]);
- $('stats').innerHTML=[[Object.keys(data.suites).length,'Curated suites'],[Object.keys(data.models).length,'Evaluated models'],[data.info.candidates.toLocaleString(),'Attack candidates'],[data.info.original_questions,'Original questions']].map(([n,t])=>`<div class="stat"><strong>${n}</strong><span>${t}</span></div>`).join('');
+ $('stats').innerHTML=[[Object.keys(data.suites).length,'Curated suites'],[Object.keys(data.models).length,'Model configurations'],[data.info.candidates.toLocaleString(),'Attack candidates'],[data.info.original_questions,'Original questions']].map(([n,t])=>`<div class="stat"><strong>${n}</strong><span>${t}</span></div>`).join('');
  $('release-version').textContent=`Data v${data.release.version} · Results ${data.release.results_revision.slice(0,7)}`;
+ $('model-search').placeholder=`Search ${Object.keys(data.models).length} configurations…`;
  const citation=await fetch('data/CITATION.bib');$('citation').textContent=await citation.text();
  if(params.get('suite')==='overview'||data.suites[params.get('suite')])suite=params.get('suite');
  selected=new Set((params.get('models')||'').split(',').filter(m=>data.models[m]));
