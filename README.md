@@ -6,7 +6,7 @@
 
 A benchmark for decision model reliability across text, structured inputs, and images.
 
-- **Paper:** https://arxiv.org/abs/2610.19118
+- **Paper:** https://huggingface.co/papers/2610.19118
 - **Website:** https://Yifan-Lan.github.io/DecisionRobust/
 - **Dataset and results:** https://huggingface.co/datasets/yflantmy/DecisionRobust
 
