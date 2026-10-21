@@ -14,10 +14,12 @@ This repository provides the evaluation tools for **DecisionRobust**: load the c
 
 ## Updates
 
+- **2026-10-20:** Published five **full** data configurations: **19,190 candidates / 1,048 original questions**, including all curated records. Curated remains the default. GUI page identifiers are now portable. No full-pool model scores were added; existing results retain their historical evaluation scope. [Data, loading and version notes](docs/full-data.md).
+
 - **2026-10-16:** Added 26 model/configuration entries and JEV-1.13 image coverage. The leaderboard now includes **56 text / 34 image configurations**, with explicit model sizes, API versions and StartLux inference modes. [Results and settings](docs/model-update-20261016.md).
 - **2026-10-14:** [DecisionRobust is available on arXiv](https://arxiv.org/abs/2610.19118).
 
-[Full update history](https://huggingface.co/datasets/yflantmy/DecisionRobust/blob/main/CHANGELOG.md). New evaluations use the same v1.2.0 benchmark examples.
+[Full update history](https://huggingface.co/datasets/yflantmy/DecisionRobust/blob/main/CHANGELOG.md). Data v1.3.0 includes full pools and portable GUI identifiers; published aggregate evaluations retain their v1.2.0 scope.
 
 ## Benchmark
 
@@ -66,8 +68,8 @@ This demo uses synthetic inputs and outputs to test the software. Its numbers ar
 ### 1. Download the benchmark
 
 ```bash
-decisionrobust download --output downloads/release-v1.2.0
-decisionrobust inspect --release-dir downloads/release-v1.2.0
+decisionrobust download --output downloads/release-v1.3.0
+decisionrobust inspect --release-dir downloads/release-v1.3.0
 ```
 
 The loader uses pinned public revisions and verifies file hashes. It downloads native JSONL and referenced images, not duplicate Parquet copies. For a smaller first run, append `--suites text_adversarial_curated` to both commands. All five suite names are listed above.
@@ -95,7 +97,7 @@ cp configs/models/local_server.json runs/my-model-config.json
 # Edit the model name and exact revision in runs/my-model-config.json.
 export DECISION_ENDPOINT=http://127.0.0.1:8000/systemone
 decisionrobust evaluate \
-  --release-dir downloads/release-v1.2.0 \
+  --release-dir downloads/release-v1.3.0 \
   --model-config runs/my-model-config.json \
   --suites text_adversarial_curated \
   --limit 3 \
@@ -112,7 +114,7 @@ Repeat the same command to resume without repeating successful requests. Add `--
 
 ```bash
 decisionrobust summarize \
-  --release-dir downloads/release-v1.2.0 \
+  --release-dir downloads/release-v1.3.0 \
   --output runs/my-model-smoke
 ```
 

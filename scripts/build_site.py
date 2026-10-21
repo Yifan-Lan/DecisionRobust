@@ -41,6 +41,12 @@ def main():
     target_map = {f"{r['config']}:{r['id']}": r for r in targets}
     assert len(target_map) == len(targets) == 717
     info = json.loads(checked('dataset_info.json', CONFIG['data_revision']))
+    # The leaderboard/explorer use curated data; full is a separate HF edition.
+    if 'editions' in info:
+        curated = info['editions']['curated']
+        info = dict(info, candidates=curated['candidates'],
+                    original_questions=curated['original_questions'],
+                    collections={k: info['collections'][k] for k in SUITES})
     out = ROOT / 'website/data'
     if out.exists():
         shutil.rmtree(out)

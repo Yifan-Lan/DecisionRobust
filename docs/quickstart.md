@@ -15,7 +15,7 @@ The demo uses explicitly synthetic data and invented outputs to exercise the sof
 
 ```bash
 decisionrobust inspect
-decisionrobust download --output downloads/release-v1.2.0
+decisionrobust download --output downloads/release-v1.3.0
 ```
 
 The loader uses the immutable data/results revisions in `src/decisionrobust/release.json`, checks file SHA256 values against the release manifests, and downloads only native JSONL, referenced original image bytes and the required result metadata. It does not also download Parquet. Use `--suites text_adversarial_curated` to download only one suite, or `--pins your-release.json` for an explicitly different version.
@@ -34,7 +34,7 @@ cp configs/models/local_server.json runs/my-model-config.json
 # Edit the model name and exact revision in runs/my-model-config.json.
 export DECISION_ENDPOINT=http://127.0.0.1:8000/systemone
 decisionrobust evaluate \
-  --release-dir downloads/release-v1.2.0 \
+  --release-dir downloads/release-v1.3.0 \
   --model-config runs/my-model-config.json \
   --suites text_adversarial_curated \
   --limit 3 --output runs/my-model-smoke
@@ -50,7 +50,7 @@ Repeat exactly the same command and output directory to reuse completed requests
 
 ```bash
 decisionrobust summarize \
-  --release-dir downloads/release-v1.2.0 \
+  --release-dir downloads/release-v1.3.0 \
   --output runs/my-model-smoke
 ```
 
