@@ -14,7 +14,7 @@ This repository provides the evaluation tools for **DecisionRobust**: load the c
 
 ## Updates
 
-- **2026-10-20:** Published five **full** data configurations: **19,190 candidates / 1,048 original questions**, including all curated records. Curated remains the default. GUI page identifiers are now portable. No full-pool model scores were added; existing results retain their historical evaluation scope. [Data, loading and version notes](docs/full-data.md).
+- **2026-10-20:** Published five **full** data configurations: **19,190 candidates / 1,048 original questions**, including all curated records. Curated remains the default. [Data, loading and version notes](docs/full-data.md).
 
 - **2026-10-16:** Added 26 model/configuration entries and JEV-1.13 image coverage. The leaderboard now includes **56 text / 34 image configurations**, with explicit model sizes, API versions and StartLux inference modes. [Results and settings](docs/model-update-20261016.md).
 - **2026-10-14:** [DecisionRobust is available on arXiv](https://arxiv.org/abs/2610.19118).
