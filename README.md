@@ -12,6 +12,8 @@ A benchmark for decision model reliability across text, structured inputs, and i
 
 This repository provides the evaluation tools for **DecisionRobust**: load the curated benchmark, run paired clean/adversarial evaluations, compute native decision metrics, and contribute model results or new examples. It also contains the interactive leaderboard website.
 
+**We recommend starting with curated for model evaluation and leaderboard comparisons.** Curated selects challenging examples across scenarios, using model attack success and suite-specific review. Full provides the larger pools that passed the applicable quality checks, before the additional curated selection and balancing, for broader analysis. Full includes curated; do not combine them as independent samples.
+
 ## Updates
 
 - **2026-10-20:** Published five **full** data configurations: **19,190 candidates / 1,048 original questions**, including all curated records. Curated remains the default. [Data, loading and version notes](docs/full-data.md).
