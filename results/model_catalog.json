@@ -731,5 +731,65 @@
     ],
     "standalone_adapter": null,
     "note": "New maintainer evaluation. Native runtime settings and exact checkpoint bindings are documented in the pinned public model_details.json; these model runtimes are not bundled with the portable evaluator."
+  },
+  {
+    "id": "pplx_flash_v12",
+    "name": "Perplexity Decider Flash v1.2-4B",
+    "checkpoint_bindings": [
+      {
+        "repository": "perplexity-ai/pplx-decider-flash-v1.2",
+        "revision": "9ff7cf9838e59df461c276b7699d56b244d2af58"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "Runtime/settings and evaluation scope are recorded in pinned public model_details.json; this entry does not imply a bundled standalone adapter."
+  },
+  {
+    "id": "d3_turbo",
+    "name": "d3-turbo-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "vllm-sr/d3-turbo",
+        "revision": "a0f3e9e59ebd1202fe1d4de1c4c0f9a986758cbb"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "Runtime/settings and evaluation scope are recorded in pinned public model_details.json; this entry does not imply a bundled standalone adapter."
+  },
+  {
+    "id": "pplx_v12",
+    "name": "Perplexity Decider v1.2-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "perplexity-ai/pplx-decider-v1.2",
+        "revision": "cce0f3f80033e9d89d80831d5281fd72124aacce"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "Runtime/settings and evaluation scope are recorded in pinned public model_details.json; this entry does not imply a bundled standalone adapter."
+  },
+  {
+    "id": "onejev16_27b",
+    "name": "OneJev1.6-27B",
+    "checkpoint_bindings": [
+      {
+        "repository": "OmniJev/OneJev1.6-27B",
+        "revision": "b8c4a4579e310b24973e5486a6a9ed5866a1b6f6"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "Runtime/settings and evaluation scope are recorded in pinned public model_details.json; this entry does not imply a bundled standalone adapter."
+  },
+  {
+    "id": "startlux_instant_27b",
+    "name": "StartLux Decision v1.1-27B Instant",
+    "checkpoint_bindings": [
+      {
+        "repository": "startlux-models/StartLux-Decision-v1.1-27B-Instant",
+        "revision": "32e7d35d74db615c4a059181efbf21c5421f3561"
+      }
+    ],
+    "standalone_adapter": null,
+    "note": "Runtime/settings and evaluation scope are recorded in pinned public model_details.json; this entry does not imply a bundled standalone adapter."
   }
 ]

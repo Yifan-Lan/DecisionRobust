@@ -23,3 +23,5 @@ Full uses the same nine native fields. Keep the complete request and score only 
 68 full GUI records, including 6 curated text-injection records, now use a generic page identifier. New candidate IDs identify changed input; original IDs remain stable. Labels, options, payloads and image bytes are unchanged. See the [ID mapping](https://huggingface.co/datasets/yflantmy/DecisionRobust/blob/main/metadata/gui_id_migration_v1_3_0.json).
 
 No full performance or new inference is included. Published aggregate results retain their v1.2.0 evaluations; the six modified curated inputs have not been re-evaluated. The current evaluation CLI loads v1.3.0 inputs, so future submissions should report the pinned revision and may differ from these historical scores. [Evaluation scope](https://huggingface.co/datasets/yflantmy/DecisionRobust/blob/main/results/evaluation_scope.json).
+
+**Results update — 2026-10-26:** Five additional model configurations now cover current v1.3.0 curated inputs, including the six GUI updates. Older rows retain their historical scope; no full-pool results are published. [Details](model-update-20261026.md).

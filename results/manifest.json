@@ -2,22 +2,30 @@
   "release": {
     "dataset": "yflantmy/DecisionRobust",
     "data_revision": "f4dcec89817b4bf59749c3a19a91d29eaafb43fa",
-    "results_revision": "f4dcec89817b4bf59749c3a19a91d29eaafb43fa",
+    "results_revision": "f2969d647efaef065e15508ea1a893028b5049a9",
     "version": "1.3.0",
     "citation_revision": "f35c4f5aedcd7c10b33ad978142bd60d7bf68a3a"
   },
   "files": {
     "model_catalog.json": {
-      "sha256": "a86e4d33e77b97a8e5e15c5100c9fe1fc54a7936ef1d3e0228edc57f02bff33d"
+      "sha256": "ce8ecfc8f4579acd2c5b6755f535f330e219a696ba53665cbb52fd6755658db2"
     },
     "published_asr.json": {
-      "sha256": "a1cd5d0e48b2b18b73e4d4307b142e7bad30ee9bad7c40ec7491ad2bfa86d059"
+      "sha256": "cfc49d5d950e7441fef02facdaeda3b47aff3b90c1eb7f3427a3b25b480994ed"
     }
   },
   "provenance": "published_asr.json is the pinned public aggregate; model_catalog.json is a restricted-field derivative of public model_details.json. It does not imply all historical runtimes are bundled.",
   "evaluation_scope": {
-    "data_version": "1.2.0",
-    "data_revision": "8b6bac5de7ed66842b6c0c86c87f0944f6cf83b6",
-    "note": "Historical curated ASR; six GUI text-injection inputs were anonymized in v1.3.0 without re-evaluation. No full results."
+    "note": "Curated only. Five configurations added on 2026-10-26 use v1.3.0, including six updated GUI inputs; older rows retain historical v1.2.0 evaluations. No full-pool results.",
+    "current_models": [
+      "pplx_flash_v12",
+      "d3_turbo",
+      "pplx_v12",
+      "onejev16_27b",
+      "startlux_instant_27b"
+    ],
+    "current_data_version": "1.3.0",
+    "current_data_revision": "f4dcec89817b4bf59749c3a19a91d29eaafb43fa",
+    "historical_data_version": "1.2.0"
   }
 }

@@ -16,12 +16,14 @@ This repository provides the evaluation tools for **DecisionRobust**: load the c
 
 ## Updates
 
+- **2026-10-26:** Added **d3-turbo-27B, Perplexity Decider v1.2-27B / Flash v1.2-4B, OneJev1.6-27B, and StartLux Instant-27B**. Now **61 text / 39 image configurations**. All five additions cover current v1.3.0 curated data; older rows remain unchanged. [Results, versions and settings](docs/model-update-20261026.md).
+
 - **2026-10-20:** Published five **full** data configurations: **19,190 candidates / 1,048 original questions**, including all curated records. Curated remains the default. [Data, loading and version notes](docs/full-data.md).
 
 - **2026-10-16:** Added 26 model/configuration entries and JEV-1.13 image coverage. The leaderboard now includes **56 text / 34 image configurations**, with explicit model sizes, API versions and StartLux inference modes. [Results and settings](docs/model-update-20261016.md).
 - **2026-10-14:** [DecisionRobust is available on arXiv](https://arxiv.org/abs/2610.19118).
 
-[Full update history](https://huggingface.co/datasets/yflantmy/DecisionRobust/blob/main/CHANGELOG.md). Data v1.3.0 includes full pools and portable GUI identifiers; published aggregate evaluations retain their v1.2.0 scope.
+[Full update history](https://huggingface.co/datasets/yflantmy/DecisionRobust/blob/main/CHANGELOG.md). Data v1.3.0 includes full pools and portable GUI identifiers; October 26 model additions use v1.3.0 curated, while older evaluations retain their v1.2.0 scope.
 
 ## Benchmark
 
